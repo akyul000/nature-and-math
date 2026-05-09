@@ -161,6 +161,18 @@ img { max-width: 100%; }
   border-radius: 4px;
   padding: 0.1rem 0.4rem;
 }
+.card-tag.soon {
+  background: #1c2333;
+  color: var(--text-muted);
+}
+.card.card-soon {
+  opacity: 0.45;
+  cursor: default;
+}
+.card.card-soon:hover {
+  border-color: var(--border);
+  transform: none;
+}
 
 /* ─── Chapter page layout ─────────────────────────────────────────────────── */
 .chapter-body {
