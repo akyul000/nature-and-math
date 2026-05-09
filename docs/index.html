@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nature &amp; Math</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Nature &amp; Math</a>
+      <nav class="top-nav">
+        <a href="#chapters">Chapters</a>
+        <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Nature speaks mathematics.</h1>
+        <p class="hero-sub">
+          An interactive journey from the intuition behind natural phenomena to the
+          partial differential equations that describe them — with hands-on simulations
+          you can explore.
+        </p>
+        <a class="btn-primary" href="chapters/01-nature-and-math/index.html">Start reading &rarr;</a>
+      </div>
+    </section>
+
+    <section class="chapter-grid" id="chapters">
+      <h2>Chapters</h2>
+      <div class="grid">
+
+        <a class="card" href="chapters/01-nature-and-math/index.html">
+          <span class="card-num">01</span>
+          <h3>Nature &amp; Math</h3>
+          <p>What does it mean to <em>model</em> nature? Digital twins, surrogate models, and the art of choosing what to ignore.</p>
+        </a>
+
+        <a class="card" href="chapters/02-intuition/index.html">
+          <span class="card-num">02</span>
+          <h3>Building Intuition</h3>
+          <p>What do $\frac{\partial u}{\partial t}$ and $\nabla^2 u$ actually mean physically? The gap no textbook fills.</p>
+        </a>
+
+        <a class="card" href="chapters/03-fourier-story/index.html">
+          <span class="card-num">03</span>
+          <h3>Fourier's Story</h3>
+          <p>How Fourier tried to solve the heat equation and accidentally discovered one of the most powerful tools in mathematics.</p>
+        </a>
+
+        <a class="card" href="chapters/04-heat-equation/index.html">
+          <span class="card-num">04</span>
+          <h3>The Heat Equation</h3>
+          <p>Derive $\frac{\partial u}{\partial t} = \alpha \nabla^2 u$ from energy balance. Interactive diffusion simulation.</p>
+          <span class="card-tag">interactive</span>
+        </a>
+
+        <a class="card" href="chapters/05-pde-classification/index.html">
+          <span class="card-num">05</span>
+          <h3>PDE Classification</h3>
+          <p>The discriminant $B^2 - 4AC$ and what it tells you about how information flows through a system.</p>
+        </a>
+
+        <a class="card" href="chapters/06-elliptic/index.html">
+          <span class="card-num">06</span>
+          <h3>Elliptic PDEs</h3>
+          <p>Laplace and Poisson equations: no time, no propagation — just the steady equilibrium the system settles into.</p>
+          <span class="card-tag">interactive</span>
+        </a>
+
+        <a class="card" href="chapters/07-parabolic/index.html">
+          <span class="card-num">07</span>
+          <h3>Parabolic PDEs</h3>
+          <p>Diffusion equations: smooth, irreversible, information spreading in all directions at once.</p>
+          <span class="card-tag">interactive</span>
+        </a>
+
+        <a class="card" href="chapters/08-hyperbolic/index.html">
+          <span class="card-num">08</span>
+          <h3>Hyperbolic PDEs</h3>
+          <p>Wave equations: information travels at finite speed, reflections, interference — the physics of sound and light.</p>
+          <span class="card-tag">interactive</span>
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built with Python, JAX, and curiosity. &mdash; <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a></p>
+  </footer>
+
+  <script src="assets/js/nav.js"></script>
+</body>
+</html>

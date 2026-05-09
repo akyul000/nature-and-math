@@ -1,0 +1,345 @@
+/* ─── Design tokens ───────────────────────────────────────────────────────── */
+:root {
+  --bg:          #0d1117;
+  --bg-surface:  #161b22;
+  --bg-card:     #1c2333;
+  --border:      #30363d;
+  --text:        #e6edf3;
+  --text-muted:  #8b949e;
+  --accent:      #d4a017;       /* amber */
+  --accent-dim:  #8b6914;
+  --link:        #58a6ff;
+  --link-hover:  #79c0ff;
+  --tag-bg:      #1f3a2a;
+  --tag-text:    #3fb950;
+  --code-bg:     #161b22;
+
+  --font-serif:  Georgia, 'Times New Roman', serif;
+  --font-sans:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono:   'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  --max-w:       900px;
+  --chapter-w:   720px;
+}
+
+/* ─── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.75;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+img { max-width: 100%; }
+
+/* ─── Site header ─────────────────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+.site-title:hover { text-decoration: none; color: var(--accent); }
+.top-nav { display: flex; gap: 1.5rem; font-family: var(--font-sans); font-size: 0.875rem; }
+
+/* Chapter header breadcrumb */
+.chapter-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  max-width: 100%;
+}
+.chapter-header a { color: var(--text-muted); }
+.chapter-header a:hover { color: var(--link); }
+.chapter-header .sep { margin: 0 0.5rem; }
+
+/* ─── Hero ────────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #0d1117 0%, #1a2038 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+.hero-inner { max-width: var(--max-w); margin: 0 auto; }
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+.hero-sub {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  font-family: var(--font-sans);
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--accent);
+  color: #000;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.75rem;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--accent-dim); color: #fff; text-decoration: none; }
+
+/* ─── Chapter grid ────────────────────────────────────────────────────────── */
+.chapter-grid {
+  max-width: var(--max-w);
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+}
+.chapter-grid h2 {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.card {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+}
+.card:hover { border-color: var(--accent-dim); transform: translateY(-2px); text-decoration: none; }
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.card h3 { font-size: 1rem; font-family: var(--font-sans); color: var(--text); margin-bottom: 0.4rem; }
+.card p  { font-size: 0.875rem; color: var(--text-muted); font-family: var(--font-sans); line-height: 1.5; }
+.card-tag {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+}
+
+/* ─── Chapter page layout ─────────────────────────────────────────────────── */
+.chapter-body {
+  max-width: var(--chapter-w);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+}
+.chapter-body h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.chapter-body .subtitle {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+}
+.chapter-body h2 {
+  font-size: 1.4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+.chapter-body h3 {
+  font-size: 1.1rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.chapter-body p { margin-bottom: 1.25rem; }
+.chapter-body ul, .chapter-body ol {
+  margin: 0 0 1.25rem 1.5rem;
+}
+.chapter-body li { margin-bottom: 0.4rem; }
+.chapter-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.5rem 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.chapter-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.chapter-body pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+.chapter-body pre code { background: none; border: none; padding: 0; font-size: 0.875rem; }
+
+/* ─── Simulation panel ────────────────────────────────────────────────────── */
+.sim-section {
+  margin-top: 3rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+.sim-section .sim-title {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.sim-controls {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background: var(--bg-card);
+}
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 200px;
+}
+.slider-group label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.slider-group .slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.slider-group input[type=range] {
+  flex: 1;
+  accent-color: var(--accent);
+}
+.slider-group .val-display {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  min-width: 3.5rem;
+  text-align: right;
+}
+.sim-plot {
+  width: 100%;
+  min-height: 360px;
+  padding: 0.5rem;
+}
+.sim-status {
+  padding: 0.5rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  min-height: 2rem;
+}
+
+/* ─── Chapter navigation footer ──────────────────────────────────────────── */
+.chapter-nav-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+.chapter-nav-footer a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 40%;
+}
+.chapter-nav-footer .nav-label { color: var(--text-muted); font-size: 0.75rem; }
+.chapter-nav-footer .nav-title { color: var(--link); }
+.chapter-nav-footer a:hover .nav-title { color: var(--link-hover); text-decoration: underline; }
+.chapter-nav-footer .next { text-align: right; margin-left: auto; }
+
+/* ─── Site footer ─────────────────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ─── Placeholder / coming soon ──────────────────────────────────────────── */
+.placeholder-notice {
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 2rem 0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .sim-controls { flex-direction: column; }
+  .chapter-nav-footer { flex-direction: column; gap: 1rem; }
+  .chapter-nav-footer .next { text-align: left; margin-left: 0; }
+}

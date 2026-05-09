@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03 · Fourier's Story — Nature &amp; Math</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../../index.html" class="site-title">Nature &amp; Math</a>
+      <nav class="top-nav">
+        <a href="../../index.html">Chapters</a>
+        <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chapter-header">
+    <a href="../../index.html">Home</a>
+    <span class="sep">/</span>
+    Chapter 03
+    <span class="sep">/</span>
+    Fourier's Story
+  </div>
+
+  <article class="chapter-body">
+    <h1>Fourier's Story</h1>
+    <p class="subtitle">How solving a practical engineering problem accidentally created one of the most powerful tools in mathematics.</p>
+
+    <div class="placeholder-notice">
+      ✏️ Content coming soon — fill in the narrative here.
+    </div>
+
+    <h2>Paris, 1807</h2>
+    <p>
+      <!-- Write about: Napoleon's Egypt campaign, Fourier as scientific administrator.
+           He became fascinated by heat after studying desert temperature swings. -->
+    </p>
+
+    <blockquote>
+      "The deep study of nature is the most fruitful source of mathematical discoveries."
+      — Joseph Fourier, 1822
+    </blockquote>
+
+    <h2>The problem: heat in a metal bar</h2>
+    <p>
+      <!-- Write about: imagine a thin metal rod, heated at one end.
+           How does temperature distribute itself over time?
+           This was an open problem in 1800. -->
+    </p>
+
+    <h2>Fourier's bold claim</h2>
+    <p>
+      Fourier proposed that any function — no matter how complicated — could be written as
+      an infinite sum of sines and cosines:
+      $$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos\!\left(\frac{n\pi x}{L}\right) + b_n \sin\!\left(\frac{n\pi x}{L}\right) \right]$$
+    </p>
+    <p>
+      <!-- Write about: Lagrange and Laplace were skeptical — this seemed impossible.
+           How could infinitely many smooth waves add up to a sharp corner?
+           Yet it works. -->
+    </p>
+
+    <h2>Why this solved the heat equation</h2>
+    <p>
+      <!-- Write about: each sine/cosine mode decays independently.
+           The heat equation turns the PDE into infinitely many independent ODEs.
+           Separation of variables was born. -->
+    </p>
+
+    <h2>The accidental discovery</h2>
+    <p>
+      <!-- Write about: Fourier did not set out to invent a new branch of mathematics.
+           He was solving a specific physics problem.
+           Today Fourier analysis underlies signal processing, quantum mechanics, MRI, JPEG. -->
+    </p>
+
+    <nav class="chapter-nav-footer" aria-label="chapter navigation">
+      <!-- injected by nav.js -->
+    </nav>
+  </article>
+
+  <footer class="site-footer">
+    <p>Built with Python, JAX, and curiosity. &mdash;
+      <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="../../assets/js/nav.js"></script>
+</body>
+</html>

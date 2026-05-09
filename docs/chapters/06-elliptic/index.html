@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>06 · Elliptic PDEs — Nature &amp; Math</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../../index.html" class="site-title">Nature &amp; Math</a>
+      <nav class="top-nav">
+        <a href="../../index.html">Chapters</a>
+        <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chapter-header">
+    <a href="../../index.html">Home</a>
+    <span class="sep">/</span>
+    Chapter 06
+    <span class="sep">/</span>
+    Elliptic PDEs
+  </div>
+
+  <article class="chapter-body">
+    <h1>Elliptic PDEs</h1>
+    <p class="subtitle">No time, no propagation — just the quiet equilibrium a system finds.</p>
+
+    <div class="placeholder-notice">
+      ✏️ Content coming soon — fill in the narrative here.
+    </div>
+
+    <h2>The Laplace equation</h2>
+    <p>
+      $$\nabla^2 u = 0$$
+    </p>
+    <p>
+      <!-- Write about: Laplace describes steady-state problems — no forcing, no time.
+           Examples: electric potential in a charge-free region, temperature in a perfectly
+           insulated steady-state, fluid velocity potential. -->
+    </p>
+
+    <h2>The Poisson equation</h2>
+    <p>
+      $$\nabla^2 u = f(x,y)$$
+    </p>
+    <p>
+      <!-- Same as Laplace but with a source term f.
+           Examples: gravitational potential with mass density, electrostatics with charge. -->
+    </p>
+
+    <h2>The maximum principle</h2>
+    <p>
+      <!-- Write about: solutions to ∇²u = 0 attain their max and min on the boundary.
+           No interior "hot spots" — perfect equilibration.
+           This is what makes elliptic problems boundary value problems. -->
+    </p>
+
+    <h2>Physical examples</h2>
+    <ul>
+      <li>Electrostatic potential: $\nabla^2 \phi = -\rho/\varepsilon_0$</li>
+      <li>Steady-state heat: $\nabla^2 T = 0$ (no time dependence)</li>
+      <li>Gravitational potential: $\nabla^2 \Phi = 4\pi G\rho$</li>
+      <li>Irrotational fluid flow: $\nabla^2 \psi = 0$</li>
+    </ul>
+
+    <!-- ── Interactive simulation ──────────────────────────────────────────── -->
+    <div class="sim-section" id="laplace-sim">
+      <div class="sim-title">Interactive · Laplace Solver (2D)</div>
+
+      <div class="sim-controls" id="controls">
+        <!-- sliders injected by SimViewer.load() -->
+      </div>
+
+      <div class="sim-plot" id="plot"></div>
+
+      <div class="sim-status" id="sim-status">
+        Run <code>python simulations/generate_all.py</code> to generate data, then reload.
+      </div>
+    </div>
+    <!-- ── end simulation ──────────────────────────────────────────────────── -->
+
+    <nav class="chapter-nav-footer" aria-label="chapter navigation">
+      <!-- injected by nav.js -->
+    </nav>
+  </article>
+
+  <footer class="site-footer">
+    <p>Built with Python, JAX, and curiosity. &mdash;
+      <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/sim-viewer.js"></script>
+  <script>
+    SimViewer.load({
+      dataDir:     './data/',
+      plotDiv:     'plot',
+      controlsDiv: 'controls',
+      statusDiv:   'sim-status',
+      params: [
+        { name: 'bc_top', label: 'Top boundary temperature', min: 0, max: 1, step: 0.1, default: 1.0 },
+      ],
+      filePattern: (p) => `laplace_bc_top_${p.bc_top.toFixed(1)}.json`,
+      plotType:    'heatmap',
+    });
+  </script>
+</body>
+</html>

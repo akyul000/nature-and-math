@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>05 · PDE Classification — Nature &amp; Math</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../../index.html" class="site-title">Nature &amp; Math</a>
+      <nav class="top-nav">
+        <a href="../../index.html">Chapters</a>
+        <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chapter-header">
+    <a href="../../index.html">Home</a>
+    <span class="sep">/</span>
+    Chapter 05
+    <span class="sep">/</span>
+    PDE Classification
+  </div>
+
+  <article class="chapter-body">
+    <h1>PDE Classification</h1>
+    <p class="subtitle">The discriminant $B^2 - 4AC$ and what it tells you about how information flows.</p>
+
+    <div class="placeholder-notice">
+      ✏️ Content coming soon — fill in the narrative here.
+    </div>
+
+    <h2>The general second-order linear PDE</h2>
+    <p>
+      Any linear second-order PDE in two variables can be written:
+      $$A\,u_{xx} + B\,u_{xy} + C\,u_{yy} + D\,u_x + E\,u_y + F\,u = G$$
+    </p>
+
+    <h2>The discriminant</h2>
+    <p>
+      By analogy with conic sections (ellipse, parabola, hyperbola), the sign of $B^2 - 4AC$
+      classifies the PDE's behavior:
+    </p>
+    <ul>
+      <li><strong>Elliptic</strong>: $B^2 - 4AC &lt; 0$ — e.g., Laplace equation $\nabla^2 u = 0$</li>
+      <li><strong>Parabolic</strong>: $B^2 - 4AC = 0$ — e.g., heat equation $u_t = \alpha u_{xx}$</li>
+      <li><strong>Hyperbolic</strong>: $B^2 - 4AC &gt; 0$ — e.g., wave equation $u_{tt} = c^2 u_{xx}$</li>
+    </ul>
+
+    <h2>Physical meaning of each type</h2>
+    <p>
+      <!-- Write about:
+           - Elliptic: no characteristics, information comes from everywhere (boundary value problems)
+           - Parabolic: one characteristic direction (time), smoothing, one-way
+           - Hyperbolic: two real characteristics, information travels along them at finite speed -->
+    </p>
+
+    <h2>Characteristic curves</h2>
+    <p>
+      <!-- Write about: characteristics are curves along which the PDE reduces to an ODE.
+           For hyperbolic: two families of real characteristics (the "light cones").
+           For elliptic: complex characteristics → no real wavefronts. -->
+    </p>
+
+    <h2>Why classification matters</h2>
+    <p>
+      <!-- Write about: different types require different numerical methods.
+           Finite differences for parabolic, finite elements for elliptic, upwind schemes for hyperbolic.
+           The type also tells you what boundary conditions are well-posed. -->
+    </p>
+
+    <nav class="chapter-nav-footer" aria-label="chapter navigation">
+      <!-- injected by nav.js -->
+    </nav>
+  </article>
+
+  <footer class="site-footer">
+    <p>Built with Python, JAX, and curiosity. &mdash;
+      <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="../../assets/js/nav.js"></script>
+</body>
+</html>

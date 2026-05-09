@@ -1,0 +1,5 @@
+numpy>=1.24
+scipy>=1.11
+# JAX is optional — heat/wave/laplace solvers have numpy fallbacks
+# jax>=0.4        # uncomment to use JIT-compiled solvers
+# jaxlib>=0.4
