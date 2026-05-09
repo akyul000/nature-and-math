@@ -9,8 +9,10 @@
     MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 </head>
 <body>
+
   <header class="site-header">
     <div class="header-inner">
       <a href="../../index.html" class="site-title">Nature &amp; Math</a>
@@ -30,50 +32,500 @@
   </div>
 
   <article class="chapter-body">
-    <h1>Nature &amp; Math</h1>
-    <p class="subtitle">Modeling philosophy, digital twins, and the art of choosing what to ignore.</p>
 
-    <div class="placeholder-notice">
-      ✏️ Content coming soon — fill in the narrative here.
+    <h1>Nature &amp; Math</h1>
+    <p class="subtitle">Why does the universe speak mathematics — and what does it mean to model it?</p>
+
+    <!-- ── Personal note ─────────────────────────────────────────────────── -->
+    <div class="personal-note">
+      <p>
+        I studied mechanical engineering. I was taught the heat equation, the wave equation,
+        Navier-Stokes. I passed the exams. But no one ever asked the question that actually
+        mattered: <em>why does this particular equation describe this particular phenomenon?</em>
+        What class of problems does it belong to? What other phenomena in nature obey the same
+        structure? What happens if I change one term?
+      </p>
+      <p>
+        Instead, the pattern was always the same. Here is the equation. Here is the derivation.
+        Here is the exam. Memorise, differentiate, move on.
+      </p>
+      <p>
+        The intuition — the engineering <em>mindset</em> — was never explicitly taught. You either
+        stumbled onto it yourself, or you left without it. I want to change that, at least for myself,
+        and for anyone else who experienced the same gap.
+      </p>
+      <p>
+        This series is not a textbook. It is a conversation — between someone who is still building
+        their intuition and anyone who has felt the same frustration. If you are here because
+        you passed the courses but still feel like the big picture is missing, welcome.
+        That feeling is the right starting point.
+      </p>
     </div>
 
+    <!-- ── Section 1 ──────────────────────────────────────────────────────── -->
+    <h2>Why does the universe speak mathematics?</h2>
+
+    <p>
+      In 1623, Galileo Galilei wrote that the book of nature
+      <em>"is written in the language of mathematics, and its characters are triangles, circles,
+      and other geometric figures."</em> Three hundred years later, the physicist Eugene Wigner
+      called it <em>"the unreasonable effectiveness of mathematics in the natural sciences"</em> —
+      the baffling fact that abstract structures invented by human minds, often with no practical
+      purpose in sight, turn out to describe physical reality with startling precision.
+    </p>
+
+    <p>
+      This is genuinely strange. Mathematics is a creation of the human mind. A partial
+      differential equation is a set of symbols on a page. There is no obvious reason why
+      those symbols should predict the orbit of Neptune, the temperature inside a jet engine,
+      or the spread of an epidemic. Yet they do. And they do it so well that we build bridges,
+      fly aircraft, and design drugs on the strength of it.
+    </p>
+
+    <p>
+      There are three honest answers to Wigner's question, and I don't think we need to pick one:
+    </p>
+
+    <ul>
+      <li>
+        <strong>The Platonic view:</strong> mathematical structure is woven into the fabric of
+        reality. We don't invent it — we discover it. The equation was always there; we just
+        finally wrote it down.
+      </li>
+      <li>
+        <strong>The pragmatic view:</strong> survivorship bias. We have tried thousands of
+        mathematical frameworks on the physical world. We kept the ones that worked and forgot
+        the ones that didn't. Of course the survivors look like they fit.
+      </li>
+      <li>
+        <strong>The evolutionary view:</strong> brains that found patterns — regularities in
+        the environment — survived. The patterns we are good at finding are precisely the ones
+        that exist at human-accessible scales. Mathematics is pattern-finding made rigorous.
+      </li>
+    </ul>
+
+    <p>
+      The mystery doesn't need to be resolved. It's part of what makes this worth studying.
+
+    </p>
+
+    <!-- ── Section 2 ──────────────────────────────────────────────────────── -->
     <h2>What is a model?</h2>
+
     <p>
-      <!-- Write about: all models are wrong, some are useful. A map is not the territory.
-           Modeling = choosing which details matter and which to ignore. -->
+      The statistician George Box put it plainly: <em>"All models are wrong, some are useful."</em>
+      A model is not reality. It is a deliberate simplification of reality — a map, not the territory.
+      A map of a city omits the texture of the roads, the smell of the bakery on the corner,
+      the exact height of every building. It is wrong in all those ways. But it still gets you
+      from the train station to the museum.
     </p>
 
-    <h2>Why math?</h2>
     <p>
-      <!-- Write about: math gives us a language to make predictions precise and testable.
-           Unreasonable effectiveness of mathematics (Wigner). -->
+      The art of mathematical modelling is the art of choosing <em>what to ignore</em>. A
+      billiard ball can be treated as a perfect sphere with uniform density — that model is
+      accurate enough to predict how it rolls. The same approximation applied to a crumpled
+      piece of paper fails instantly. The model did not become wrong; it was always wrong.
+      What changed is whether the ignored details matter for the question being asked.
     </p>
 
+    <p>
+      Consider the Moon. Depending on what you want to know, you might model it as:
+    </p>
+
+    <ul>
+      <li>
+        <strong>A point mass</strong> — enough to compute its orbit around the Earth to
+        engineering precision. Newton did this in 1687.
+      </li>
+      <li>
+        <strong>A rigid sphere</strong> — needed to explain the tides, which depend on the
+        Moon's gravitational gradient across the Earth's diameter.
+      </li>
+      <li>
+        <strong>A deformable body</strong> — needed to understand how the Moon's own shape
+        responds to the Earth's tidal forces over geological time.
+      </li>
+    </ul>
+
+    <p>
+      Each model is "wrong." Each model is useful for a specific question. Choosing the right
+      level of description for the question at hand — that is the engineering mindset.
+    </p>
+
+    <!-- ── Section 3 ──────────────────────────────────────────────────────── -->
+    <h2>The anatomy of a mathematical model</h2>
+
+    <p>
+      Every mathematical model has three components. Once you see this structure, you will
+      recognise it everywhere — in fluid dynamics, in circuit theory, in population biology,
+      in financial mathematics.
+    </p>
+
+    <ul>
+      <li>
+        <strong>State variables</strong> — the quantities that describe the current condition
+        of the system. Position and velocity for a projectile. Temperature for a heated rod.
+        Concentration for a chemical reaction.
+      </li>
+      <li>
+        <strong>Parameters</strong> — constants that characterise the system but don't evolve
+        with it. Gravitational acceleration $g$. Thermal diffusivity $\alpha$. A reaction rate
+        constant $k$.
+      </li>
+      <li>
+        <strong>Governing equations</strong> — the rules that say how the state evolves.
+        Usually derived from a conservation law: conservation of energy, momentum, mass, charge.
+      </li>
+    </ul>
+
+    <p>
+      Take the simplest possible example: a ball thrown at angle $\theta$ with speed $v_0$.
+      The state is $(x, y, v_x, v_y)$. The parameter is $g = 9.81\ \text{m/s}^2$.
+      The governing equation comes from Newton's second law, $F = ma$:
+    </p>
+
+    <p style="text-align:center; margin: 1.5rem 0;">
+      $\ddot{x} = 0, \qquad \ddot{y} = -g$
+    </p>
+
+    <p>
+      Integrate twice, apply initial conditions, and you get the familiar parabola. This is
+      a model. It ignores air resistance, the rotation of the Earth, the elasticity of the ball.
+      For a slow throw in a room, those omissions are fine. For a long-range artillery shell or
+      a baseball pitch, they are not.
+    </p>
+
+    <!-- ── Section 4: interactive ─────────────────────────────────────────── -->
+    <h2>The model ladder</h2>
+
+    <p>
+      What happens when we stop ignoring things? Below is the same projectile described by
+      three levels of model. Each adds one layer of physics. Watch how the predicted trajectory
+      changes — and notice that each curve requires new parameters, new assumptions, and more
+      computation.
+    </p>
+
+    <ul>
+      <li><strong>Level 1 — Point mass, no air:</strong> $\ddot{y} = -g$. A perfect parabola.</li>
+      <li>
+        <strong>Level 2 — Quadratic drag:</strong>
+        $m\ddot{\mathbf{r}} = m\mathbf{g} - \tfrac{1}{2}\rho C_d A\,|\mathbf{v}|\,\mathbf{v}$.
+        The ball slows faster on the way down than up. Range shrinks.
+      </li>
+      <li>
+        <strong>Level 3 — Magnus effect (spin):</strong> a spinning ball deflects sideways.
+        $\mathbf{F}_\text{Magnus} = C_L\,(\boldsymbol{\omega} \times \mathbf{v})$.
+        This is why a football curves.
+      </li>
+    </ul>
+
+    <p>
+      There is no "correct" model. There is only the model that is appropriate for the precision
+      you need and the cost you can afford.
+    </p>
+
+    <!-- simulation panel -->
+    <div class="sim-section">
+      <div class="sim-title">Interactive · The Model Ladder</div>
+      <div class="sim-controls" id="controls">
+        <div class="slider-group">
+          <label for="v0-slider">Launch speed $v_0$ (m/s)</label>
+          <div class="slider-row">
+            <input type="range" id="v0-slider" min="10" max="40" step="1" value="20" />
+            <span class="val-display" id="v0-val">20</span>
+          </div>
+        </div>
+        <div class="slider-group">
+          <label for="theta-slider">Launch angle θ (°)</label>
+          <div class="slider-row">
+            <input type="range" id="theta-slider" min="15" max="75" step="1" value="45" />
+            <span class="val-display" id="theta-val">45</span>
+          </div>
+        </div>
+        <div class="slider-group">
+          <label>Show models</label>
+          <div style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem;">
+            <label class="check-label"><input type="checkbox" id="show-l1" checked /> Level 1 — no air</label>
+            <label class="check-label"><input type="checkbox" id="show-l2" checked /> Level 2 — drag</label>
+            <label class="check-label"><input type="checkbox" id="show-l3" checked /> Level 3 — drag + spin</label>
+          </div>
+        </div>
+      </div>
+      <div class="sim-plot" id="plot" style="min-height:380px;"></div>
+      <div class="sim-status" id="sim-status">
+        Place your pre-computed JSON files in <code>data/projectile_v0_&lt;V&gt;_theta_&lt;A&gt;.json</code>
+        and uncomment the loader below.
+      </div>
+    </div>
+
+    <!-- ── Section 5 ──────────────────────────────────────────────────────── -->
     <h2>Digital twins</h2>
+
     <p>
-      <!-- Write about: a digital twin is a live mathematical replica of a physical system.
-           Examples: NASA turbine, city traffic, patient heart models.
-           How it differs from a one-shot simulation. -->
+      A simulation is something you run once and walk away from. A <strong>digital twin</strong>
+      is something that runs alongside reality — continuously fed with sensor data, continuously
+      correcting itself against what the physical system is actually doing.
     </p>
 
-    <h2>Surrogate models</h2>
     <p>
-      <!-- Write about: when the full model is too expensive to run, train a cheap approximation.
-           Neural-network surrogates, Gaussian processes, polynomial chaos.
-           The spectrum: physics-based → data-driven. -->
+      The term was coined at NASA in the early 2000s, initially for spacecraft and aircraft
+      structural health monitoring. The idea: build a mathematical model of a physical asset
+      so faithful that the virtual copy and the real object evolve together. When the real
+      engine develops a hairline crack, the twin's stress field shifts to match — and predicts
+      when the crack will become dangerous before any human inspector would notice.
+    </p>
+
+    <p>
+      Today, digital twins operate at every scale:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Component scale:</strong> a turbine blade, a bearing, a battery cell.
+        The twin predicts remaining useful life and schedules maintenance before failure.
+      </li>
+      <li>
+        <strong>System scale:</strong> a factory floor, an aircraft, a wind farm.
+        The twin optimises control decisions in real time.
+      </li>
+      <li>
+        <strong>City scale:</strong> Singapore's Virtual Singapore project maps every building,
+        road, and utility line into a living model used for urban planning and emergency response.
+      </li>
+      <li>
+        <strong>Human scale:</strong> the Living Heart Project (Dassault Systèmes) builds
+        patient-specific cardiac models from medical imaging. Surgeons rehearse on the twin
+        before touching the patient.
+      </li>
+    </ul>
+
+    <p>
+      The quality of a digital twin is bounded by the quality of its underlying mathematical
+      model. A twin built on a crude model gives crude predictions, no matter how many sensors
+      you plug in. This is why the equations matter — and why understanding them at a deep
+      level is not an academic exercise.
+    </p>
+
+    <!-- ── Section 6 ──────────────────────────────────────────────────────── -->
+    <h2>Surrogate models</h2>
+
+    <p>
+      There is a tension at the heart of mathematical modelling: the more accurate the model,
+      the more expensive it is to run. A full computational fluid dynamics simulation of
+      airflow over a wing might take hours on a supercomputer. A digital twin that needs to
+      make real-time control decisions cannot wait hours. Something has to give.
+    </p>
+
+    <p>
+      The answer is a <strong>surrogate model</strong> (also called an emulator or
+      metamodel): a cheap approximation that is trained to mimic the expensive model over
+      the parameter range of interest.
+    </p>
+
+    <p>
+      The process:
+    </p>
+
+    <ol>
+      <li>Run the expensive simulator at a carefully chosen set of input parameters — a <em>design of experiments</em>.</li>
+      <li>Train a surrogate (a polynomial, a Gaussian process, a neural network) on those input-output pairs.</li>
+      <li>Use the surrogate where you need fast predictions; fall back to the full model for validation.</li>
+    </ol>
+
+    <p>
+      Surrogates sit on a spectrum between two extremes:
+    </p>
+
+    <div class="spectrum-bar">
+      <div class="spectrum-label left">Pure physics<br/><span>first-principles PDEs<br/>expensive, interpretable</span></div>
+      <div class="spectrum-arrow">⟶</div>
+      <div class="spectrum-label right">Pure data<br/><span>neural networks<br/>cheap, opaque</span></div>
+    </div>
+
+    <p>
+      The most interesting current research lives in the middle: <strong>physics-informed neural
+      networks</strong> (PINNs), which incorporate known governing equations as constraints during
+      training. The network learns to satisfy the PDE and the data simultaneously — combining
+      the expressiveness of deep learning with the structure of physics.
+    </p>
+
+    <p>
+      We will return to all of this. The chapters that follow build the mathematical machinery
+      — the PDEs, their classification, their solutions — that makes all of the above possible.
+      The goal is not to memorise equations. It is to develop a mental model of <em>why</em>
+      different types of equations describe different types of phenomena, and what that tells
+      you about the physical system before you even start computing.
     </p>
 
     <nav class="chapter-nav-footer" aria-label="chapter navigation">
       <!-- injected by nav.js -->
     </nav>
+
   </article>
 
   <footer class="site-footer">
-    <p>Built with Python, JAX, and curiosity. &mdash;
+    <p>Built with curiosity. &mdash;
       <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a>
     </p>
   </footer>
 
   <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/sim-viewer.js"></script>
+  <script>
+  /* ── Projectile slider wiring ──────────────────────────────────────────────
+     When you have generated your JSON data, replace the placeholder render
+     below with SimViewer.load({...}) or your own Plotly call.
+
+     Expected file format:
+     data/projectile_v0_<V>_theta_<A>.json
+     {
+       "params": { "v0": 20, "theta_deg": 45 },
+       "models": {
+         "level1": { "x": [...], "y": [...] },
+         "level2": { "x": [...], "y": [...] },
+         "level3": { "x": [...], "y": [...] }
+       }
+     }
+  ── */
+
+  (function () {
+    const v0Slider    = document.getElementById('v0-slider');
+    const thetaSlider = document.getElementById('theta-slider');
+    const v0Val       = document.getElementById('v0-val');
+    const thetaVal    = document.getElementById('theta-val');
+    const showL1      = document.getElementById('show-l1');
+    const showL2      = document.getElementById('show-l2');
+    const showL3      = document.getElementById('show-l3');
+    const plotDiv     = document.getElementById('plot');
+    const statusEl    = document.getElementById('sim-status');
+
+    const COLORS = { level1: '#58a6ff', level2: '#d4a017', level3: '#3fb950' };
+    const NAMES  = { level1: 'Level 1 — no air', level2: 'Level 2 — drag', level3: 'Level 3 — drag + spin' };
+
+    let cache = {};
+
+    function filename(v0, theta) {
+      return `./data/projectile_v0_${v0}_theta_${theta}.json`;
+    }
+
+    async function loadAndRender() {
+      const v0    = parseInt(v0Slider.value);
+      const theta = parseInt(thetaSlider.value);
+      const url   = filename(v0, theta);
+
+      if (!cache[url]) {
+        try {
+          const r = await fetch(url);
+          if (!r.ok) throw new Error(r.status);
+          cache[url] = await r.json();
+          statusEl.textContent = `Loaded ${url}`;
+        } catch {
+          renderPlaceholder(v0, theta);
+          statusEl.textContent =
+            `No data yet — generate data/projectile_v0_${v0}_theta_${theta}.json with your Python solver.`;
+          return;
+        }
+      }
+
+      renderData(cache[url]);
+    }
+
+    function renderData(data) {
+      const checks = { level1: showL1.checked, level2: showL2.checked, level3: showL3.checked };
+      const traces = Object.entries(data.models)
+        .filter(([k]) => checks[k])
+        .map(([k, d]) => ({
+          x: d.x, y: d.y,
+          type: 'scatter', mode: 'lines',
+          name: NAMES[k],
+          line: { color: COLORS[k], width: 2.5 },
+        }));
+
+      Plotly.react(plotDiv, traces, layout(), { responsive: true, displayModeBar: false });
+    }
+
+    function renderPlaceholder(v0, theta) {
+      /* analytic level-1 trajectory so the panel isn't empty */
+      const g = 9.81, rad = theta * Math.PI / 180;
+      const vx = v0 * Math.cos(rad), vy = v0 * Math.sin(rad);
+      const tFlight = 2 * vy / g;
+      const n = 80;
+      const xs = [], ys = [];
+      for (let i = 0; i <= n; i++) {
+        const t = (i / n) * tFlight;
+        xs.push(vx * t);
+        ys.push(vy * t - 0.5 * g * t * t);
+      }
+      const traces = [{
+        x: xs, y: ys, type: 'scatter', mode: 'lines',
+        name: 'Level 1 (placeholder)', line: { color: COLORS.level1, width: 2, dash: 'dot' },
+      }];
+      Plotly.react(plotDiv, traces, layout(), { responsive: true, displayModeBar: false });
+    }
+
+    function layout() {
+      return {
+        paper_bgcolor: '#161b22', plot_bgcolor: '#0d1117',
+        font: { color: '#e6edf3', family: 'monospace' },
+        margin: { t: 30, b: 50, l: 55, r: 20 },
+        xaxis: { title: 'x (m)', gridcolor: '#30363d', zerolinecolor: '#30363d', rangemode: 'tozero' },
+        yaxis: { title: 'y (m)', gridcolor: '#30363d', zerolinecolor: '#30363d', rangemode: 'tozero' },
+        legend: { bgcolor: '#1c2333', bordercolor: '#30363d', borderwidth: 1 },
+        height: 380,
+      };
+    }
+
+    function sync() {
+      v0Val.textContent    = v0Slider.value;
+      thetaVal.textContent = thetaSlider.value;
+      loadAndRender();
+    }
+
+    [v0Slider, thetaSlider, showL1, showL2, showL3].forEach(el => el.addEventListener('input', sync));
+    sync();
+  })();
+  </script>
+
+  <!-- extra styles local to this chapter -->
+  <style>
+    .personal-note {
+      border-left: 3px solid var(--accent);
+      background: #12181f;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0 2.5rem;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: #c9d1d9;
+    }
+    .personal-note p { margin-bottom: 0.75rem; }
+    .personal-note p:last-child { margin-bottom: 0; }
+
+    .check-label {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .spectrum-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.5rem;
+      margin: 1.25rem 0;
+      font-family: var(--font-sans);
+    }
+    .spectrum-label { flex: 1; font-size: 0.875rem; font-weight: 600; color: var(--text); }
+    .spectrum-label span { font-weight: 400; color: var(--text-muted); font-size: 0.775rem; }
+    .spectrum-label.right { text-align: right; }
+    .spectrum-arrow { font-size: 1.5rem; color: var(--accent); flex: 2; text-align: center; letter-spacing: 0.15em; }
+  </style>
+
 </body>
 </html>
