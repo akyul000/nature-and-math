@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02 · Building Intuition — Nature &amp; Math</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../../index.html" class="site-title">Nature &amp; Math</a>
+      <nav class="top-nav">
+        <a href="../../index.html">Chapters</a>
+        <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chapter-header">
+    <a href="../../index.html">Home</a>
+    <span class="sep">/</span>
+    Chapter 02
+    <span class="sep">/</span>
+    Building Intuition
+  </div>
+
+  <article class="chapter-body">
+
+    <h1>Building Intuition</h1>
+    <p class="subtitle">What do $\partial u/\partial t$ and $\partial^2 u/\partial x^2$ actually mean — physically?</p>
+
+    <!-- ── Personal note ─────────────────────────────────────────────────── -->
+    <div class="personal-note">
+      <p>
+        At some point in your engineering education, someone wrote this on a board:
+      </p>
+      <p style="text-align:center; font-style:normal; font-family:var(--font-mono); font-size:1rem; color:var(--accent);">
+        ∂u/∂t = α ∂²u/∂x²
+      </p>
+      <p>
+        And then, most likely, they showed you how to solve it. Separation of variables.
+        Eigenfunction expansions. Boundary conditions. You learned the machinery.
+        But nobody stopped to ask the prior question: <em>what does this equation say?</em>
+        What does $\partial u / \partial t$ feel like? What is $\partial^2 u / \partial x^2$
+        actually measuring?
+      </p>
+      <p>
+        This chapter is about that question. Before you can develop intuition for how
+        the equation behaves, you need a physical picture of what its terms mean.
+        Once you have that picture, the equation stops being a formula you memorise
+        and starts being something that is obviously true.
+      </p>
+    </div>
+
+    <!-- ── Section 1 ──────────────────────────────────────────────────────── -->
+    <h2>What is $\partial u / \partial t$?</h2>
+
+    <p>
+      Imagine you are holding a thermometer inside a metal bar that is being heated from one end.
+      The temperature at your exact location, at this exact moment, is $u$.
+      You wait a short time $\Delta t$. The temperature is now $u + \Delta u$.
+      The rate at which temperature is changing at your location is:
+    </p>
+
+    <p style="text-align:center; margin: 1.5rem 0;">
+      $\displaystyle\frac{\partial u}{\partial t} \approx \frac{u(t + \Delta t) - u(t)}{\Delta t}$
+    </p>
+
+    <p>
+      This is the <strong>time derivative</strong>: how fast the temperature is changing right here,
+      right now. If $\partial u / \partial t > 0$, this location is warming. If it is negative,
+      it is cooling. If it is zero, the temperature at this point is momentarily steady.
+    </p>
+
+    <p>
+      The partial derivative symbol $\partial$ (rather than the ordinary $d$) signals that $u$
+      depends on <em>multiple</em> variables — here, both position $x$ and time $t$. When we
+      write $\partial u / \partial t$, we hold $x$ fixed and ask: how does $u$ change with $t$
+      at this one location? The rest of the bar does not enter the picture.
+    </p>
+
+    <p>
+      In discrete form — which is also how computers compute it — this becomes:
+    </p>
+
+    <pre><code>∂u/∂t ≈ (u[n+1] - u[n]) / Δt</code></pre>
+
+    <p>
+      where <code>u[n]</code> is the temperature at time step $n$. This approximation
+      gets more accurate as $\Delta t \to 0$.
+    </p>
+
+    <!-- ── Section 2 ──────────────────────────────────────────────────────── -->
+    <h2>What is $\partial u / \partial x$?</h2>
+
+    <p>
+      Now freeze time. You are looking at a snapshot of the temperature distribution along
+      the bar — a curve $u(x)$ that tells you the temperature at every position.
+      The quantity $\partial u / \partial x$ is the <strong>slope</strong> of that curve:
+      how steeply the temperature rises or falls as you move in the $x$-direction.
+    </p>
+
+    <p>
+      This derivative has a direct physical consequence. In 1822, Jean-Baptiste Joseph Fourier
+      proposed that the rate of heat flow through a material is proportional to the temperature
+      gradient. This is <strong>Fourier's law of heat conduction</strong>:
+    </p>
+
+    <p style="text-align:center; margin: 1.5rem 0;">
+      $q = -k\,\dfrac{\partial u}{\partial x}$
+    </p>
+
+    <p>
+      Here $q$ is the heat flux (energy per unit area per unit time) and $k$ is thermal
+      conductivity. The minus sign is load-bearing: it says that heat flows
+      <em>opposite</em> to the temperature gradient. Heat flows <em>downhill</em>. Where the
+      temperature is falling in the $x$-direction ($\partial u / \partial x < 0$),
+      heat flows in the positive $x$-direction. Where temperature is rising
+      ($\partial u / \partial x > 0$), heat flows backward.
+    </p>
+
+    <p>
+      The gradient alone tells you the <em>direction and intensity</em> of heat flow, but
+      not whether a given point will heat up or cool down. For that, you need the second derivative.
+    </p>
+
+    <!-- ── Section 3 (KEY) ────────────────────────────────────────────────── -->
+    <h2>What is $\partial^2 u / \partial x^2$?</h2>
+
+    <p>
+      This is the central concept of the chapter. Take a moment with it.
+    </p>
+
+    <p>
+      Consider three neighbouring points on the bar: $x_{i-1}$, $x_i$, and $x_{i+1}$,
+      spaced $\Delta x$ apart. We want to find a formula for the second spatial derivative
+      at the middle point $x_i$.
+    </p>
+
+    <p>
+      Expand $u(x_i + \Delta x)$ and $u(x_i - \Delta x)$ using Taylor series:
+    </p>
+
+    <p style="text-align:center; margin: 1rem 0;">
+      $u_{i+1} = u_i + u'_i\,\Delta x + \tfrac{1}{2}u''_i\,\Delta x^2 + O(\Delta x^3)$
+    </p>
+    <p style="text-align:center; margin: 1rem 0;">
+      $u_{i-1} = u_i - u'_i\,\Delta x + \tfrac{1}{2}u''_i\,\Delta x^2 + O(\Delta x^3)$
+    </p>
+
+    <p>
+      Add the two equations. The first-derivative terms cancel:
+    </p>
+
+    <p style="text-align:center; margin: 1rem 0;">
+      $u_{i+1} + u_{i-1} = 2u_i + u''_i\,\Delta x^2 + O(\Delta x^4)$
+    </p>
+
+    <p>Solve for $u''_i$:</p>
+
+    <div class="equation-box">
+      <p>$\displaystyle\frac{\partial^2 u}{\partial x^2}\bigg|_i \approx \frac{u_{i+1} - 2u_i + u_{i-1}}{\Delta x^2}$</p>
+      <p class="eq-caption">The central-difference formula for the second derivative</p>
+    </div>
+
+    <p>
+      Now rearrange. Factor a 2 from the numerator:
+    </p>
+
+    <p style="text-align:center; margin: 1.5rem 0;">
+      $\displaystyle\frac{\partial^2 u}{\partial x^2}\bigg|_i = \frac{2}{\Delta x^2}\left(\frac{u_{i-1} + u_{i+1}}{2} - u_i\right)$
+    </p>
+
+    <p>
+      The term $(u_{i-1} + u_{i+1})/2$ is simply the <strong>average of the two neighbours</strong>.
+      So the second derivative is proportional to:
+    </p>
+
+    <div class="equation-box">
+      <p>$\displaystyle\frac{\partial^2 u}{\partial x^2}\bigg|_i \;\propto\; \underbrace{\frac{u_{i-1}+u_{i+1}}{2}}_{\text{neighbor average}} - \;\underbrace{u_i}_{\text{you}}$</p>
+      <p class="eq-caption">The Laplacian measures how different you are from your surroundings</p>
+    </div>
+
+    <p>
+      Read this carefully. The second derivative at a point is positive when the
+      point is <em>cooler</em> than its neighbours (the average exceeds $u_i$), and
+      negative when the point is <em>hotter</em> than its neighbours.
+    </p>
+
+    <p>
+      A concrete example. Suppose at three adjacent grid points we measure:
+    </p>
+
+    <pre><code>x_{i-1} = 0.30,  u_{i-1} = 0.60
+x_i     = 0.40,  u_i     = 1.00   ← the peak
+x_{i+1} = 0.50,  u_{i+1} = 0.60
+
+Δx = 0.10
+
+Neighbor average = (0.60 + 0.60) / 2 = 0.60
+Deviation        = 0.60 − 1.00     = −0.40   ← cooler than you
+
+∂²u/∂x² ≈ (0.60 − 2×1.00 + 0.60) / (0.10)² = −0.80 / 0.01 = −80</code></pre>
+
+    <p>
+      Negative second derivative at the peak: this point is hotter than its neighbours.
+      It will cool down. This is not a mathematical curiosity — it is exactly what you
+      would expect from physical experience. A hot spot in a bar does not stay hot.
+      Heat diffuses outward until the temperature equalises.
+    </p>
+
+    <p>
+      The interactive simulation below makes this visible in real time.
+    </p>
+
+    <!-- ── Main Simulation ────────────────────────────────────────────────── -->
+    <div class="sim-section" id="bar-explorer">
+      <div class="sim-title">Interactive · 1-D Temperature Bar Explorer</div>
+      <div class="sim-controls" id="heat-controls">
+
+        <!-- IC selector -->
+        <div class="slider-group">
+          <label>Initial condition</label>
+          <div style="display:flex; flex-direction:column; gap:0.35rem; margin-top:0.25rem;">
+            <label class="check-label">
+              <input type="radio" name="ic" value="gaussian" checked />
+              Gaussian
+            </label>
+            <label class="check-label">
+              <input type="radio" name="ic" value="pulse" />
+              Rectangular pulse
+            </label>
+            <label class="check-label">
+              <input type="radio" name="ic" value="sine" />
+              Sine wave
+            </label>
+          </div>
+        </div>
+
+        <!-- Alpha slider -->
+        <div class="slider-group">
+          <label for="alpha-sl">Thermal diffusivity $\alpha$</label>
+          <div class="slider-row">
+            <input type="range" id="alpha-sl" min="0" max="2" step="1" value="1" />
+            <span class="val-display" id="alpha-val">0.05</span>
+          </div>
+          <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem;">
+            0 = slow · 1 = medium · 2 = fast
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="slider-group">
+          <label>Overlay</label>
+          <div style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.25rem;">
+            <span class="legend-swatch amber">u(x,t) — Temperature</span>
+            <span class="legend-swatch blue">∂u/∂x — Slope (heat flow direction)</span>
+            <span class="legend-swatch green">∂²u/∂x² — Laplacian</span>
+            <span class="legend-swatch red-fill">Red fill → will cool down</span>
+            <span class="legend-swatch blue-fill">Blue fill → will warm up</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time scrubber -->
+      <div class="time-scrubber">
+        <label for="time-sl" style="font-family:var(--font-sans); font-size:0.8rem; color:var(--text-muted);">Time</label>
+        <div class="slider-row" style="gap:0.75rem; align-items:center;">
+          <button id="play-btn" class="play-btn">&#9654; Play</button>
+          <input type="range" id="time-sl" min="0" max="99" step="1" value="0" style="flex:1;" />
+          <span class="val-display" id="time-val">t = 0.000</span>
+        </div>
+        <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem;">
+          Click any point on the plot to inspect its neighbors.
+        </div>
+      </div>
+
+      <!-- Main plot -->
+      <div class="sim-plot" id="heat-plot" style="min-height:420px;"></div>
+
+      <!-- Neighbor probe panel -->
+      <div id="neighbor-probe">
+        <div class="probe-header">Neighbor probe</div>
+        <table id="probe-table">
+          <tbody></tbody>
+        </table>
+        <div id="probe-verdict"></div>
+      </div>
+
+      <div class="sim-status" id="heat-status">Loading…</div>
+    </div>
+
+    <!-- ── Space-time heatmap ─────────────────────────────────────────────── -->
+    <div class="sim-section" id="spacetime-view" style="margin-top:1.5rem;">
+      <div class="sim-title">Secondary · Space–Time Temperature Map</div>
+      <div style="padding:0.5rem 1.25rem 0; font-family:var(--font-sans); font-size:0.8rem; color:var(--text-muted);">
+        Horizontal axis: position. Vertical axis: time. Colour: temperature.
+        The amber dashed line marks the current time frame.
+      </div>
+      <div class="sim-plot" id="heatmap-plot" style="min-height:220px;"></div>
+    </div>
+
+    <!-- ── Section 4 ──────────────────────────────────────────────────────── -->
+    <h2>The heat equation — it clicks</h2>
+
+    <p>
+      We now have all the pieces. Assemble them.
+    </p>
+
+    <ul>
+      <li>$\partial u / \partial t$ — how fast the temperature at a point is changing.</li>
+      <li>$\partial^2 u / \partial x^2$ — how different the temperature at a point is from its neighbours.</li>
+    </ul>
+
+    <p>
+      The heat equation says these two quantities are proportional:
+    </p>
+
+    <div class="equation-box">
+      <p>$\displaystyle\frac{\partial u}{\partial t} = \alpha\,\frac{\partial^2 u}{\partial x^2}$</p>
+      <p class="eq-caption">Your temperature changes at a rate proportional to how much you differ from your neighbours.</p>
+    </div>
+
+    <p>
+      In plain language: <em>if you are hotter than your surroundings, you cool down;
+      if you are cooler, you warm up.</em> The rate is determined by how large the
+      difference is and by the thermal diffusivity $\alpha$ of the material.
+    </p>
+
+    <p>
+      This is not a counter-intuitive result. It is exactly what you would expect heat
+      to do based on everyday experience. The equation is not imposing something arbitrary
+      on nature — it is capturing something you already knew, in the precise language
+      of mathematics.
+    </p>
+
+    <p>
+      Look at the simulation above with this in mind. Wherever the Laplacian (green curve)
+      is negative, the temperature is above the local average — the red fill marks those
+      regions as ones that will cool. Wherever the Laplacian is positive — blue fill —
+      the temperature is below average and will rise. And the time evolution
+      (the space–time map below) shows exactly that process playing out.
+    </p>
+
+    <p>
+      One more thing to notice: as time progresses, the peaks flatten and the valleys
+      fill in. The temperature distribution smooths out. Eventually it flattens to zero
+      everywhere (because we fixed the bar's ends at zero temperature). This process
+      is <strong>diffusion</strong>, and the heat equation is the mathematical statement
+      of how it works.
+    </p>
+
+    <!-- ── Section 5: Ch3 teaser ──────────────────────────────────────────── -->
+    <h2>What comes next</h2>
+
+    <p>
+      We can now stare at the heat equation and understand what it says. But can we solve it?
+      Can we find an exact formula for $u(x,t)$ given any initial condition?
+    </p>
+
+    <p>
+      In the early 1800s, Joseph Fourier sat with precisely this problem. He tried to
+      understand heat conduction in a solid body — a problem that Napoleon's Institut de
+      France had offered a prize for. The approach he developed to solve it was so
+      unexpected, and so powerful, that it reshaped nearly every branch of mathematics
+      and physics that came after.
+    </p>
+
+    <blockquote class="teaser-quote">
+      Fourier's key insight: <em>any</em> initial temperature profile can be written as
+      a sum of sine and cosine waves, each of which the heat equation solves exactly.
+      The complicated problem decomposes into infinitely many simple ones — and the
+      simple ones can be solved by inspection.
+    </blockquote>
+
+    <p>
+      This idea — decomposing a function into its frequency components — is now called
+      the Fourier series. It underlies signal processing, image compression, quantum
+      mechanics, and the very concept of a differential equation's spectrum. The next
+      chapter tells the story of how Fourier found it, and why the mathematical
+      establishment initially rejected it.
+    </p>
+
+    <nav class="chapter-nav-footer" aria-label="chapter navigation">
+      <!-- injected by nav.js -->
+    </nav>
+
+  </article>
+
+  <footer class="site-footer">
+    <p>Built with curiosity. &mdash;
+      <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/sim-viewer.js"></script>
+
+  <script>
+  /* ── Chapter 2: 1-D Temperature Bar Explorer ──────────────────────────── */
+  (function () {
+    'use strict';
+
+    const ALPHA_VALUES = [0.01, 0.05, 0.1];
+    const DATA_DIR     = './data/';
+
+    let cache            = {};
+    let currentData      = null;
+    let frameIdx         = 0;
+    let playing          = false;
+    let animHandle       = null;
+    let probeIdx         = null;
+    let listenersAttached = false;
+
+    const plotEl       = document.getElementById('heat-plot');
+    const heatmapEl    = document.getElementById('heatmap-plot');
+    const timeSl       = document.getElementById('time-sl');
+    const timeValEl    = document.getElementById('time-val');
+    const alphaSl      = document.getElementById('alpha-sl');
+    const alphaValEl   = document.getElementById('alpha-val');
+    const playBtn      = document.getElementById('play-btn');
+    const statusEl     = document.getElementById('heat-status');
+    const probePanel   = document.getElementById('neighbor-probe');
+    const probeTableEl = document.getElementById('probe-table');
+    const probeVerdict = document.getElementById('probe-verdict');
+
+    function getIC()    { return document.querySelector('input[name="ic"]:checked').value; }
+    function getAlpha() { return ALPHA_VALUES[parseInt(alphaSl.value)]; }
+    function fname(ic, alpha) { return `heat_ic_${ic}_alpha_${alpha}.json`; }
+
+    /* ── Data loading ──────────────────────────────────────────────────── */
+    async function reload() {
+      const ic    = getIC();
+      const alpha = getAlpha();
+      alphaValEl.textContent = alpha;
+      const url = DATA_DIR + fname(ic, alpha);
+      statusEl.textContent = `Loading ${fname(ic, alpha)}…`;
+
+      if (!cache[url]) {
+        try {
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error(resp.status);
+          cache[url] = await resp.json();
+        } catch (_) {
+          statusEl.textContent =
+            'Could not load data — run simulations/heat/generate_data.py first.';
+          return;
+        }
+      }
+
+      currentData = cache[url];
+      frameIdx    = (ic === 'pulse') ? 3 : 0;
+      timeSl.value = frameIdx;
+      probeIdx    = null;
+      probePanel.style.display = 'none';
+
+      renderFrame();
+      renderHeatmap();
+      statusEl.textContent =
+        `Loaded · ${ic} · α = ${alpha} · ${currentData.t.length} frames`;
+    }
+
+    /* ── Frame rendering ───────────────────────────────────────────────── */
+    function renderFrame() {
+      if (!currentData) return;
+
+      const x   = currentData.x;
+      const u   = currentData.u_history[frameIdx];
+      const du  = currentData.dudx_history[frameIdx];
+      const d2u = currentData.d2udx2_history[frameIdx];
+      const t   = currentData.t[frameIdx];
+
+      timeValEl.textContent = `t = ${t.toFixed(4)}`;
+      timeSl.value = frameIdx;
+
+      /* Split d2u into warming (positive) and cooling (negative) regions */
+      const d2u_pos = d2u.map(v => (v > 0 ? v : null));
+      const d2u_neg = d2u.map(v => (v < 0 ? v : null));
+
+      const probeTrace = buildProbeTrace(x, u);
+
+      const traces = [
+        { x, y: u,       type: 'scatter', mode: 'lines', name: 'u(x,t) temperature',
+          line: { color: '#d4a017', width: 2.5 }, yaxis: 'y' },
+        { x, y: du,      type: 'scatter', mode: 'lines', name: '∂u/∂x slope',
+          line: { color: '#58a6ff', width: 1.5 }, yaxis: 'y2' },
+        { x, y: d2u_pos, type: 'scatter', mode: 'none', name: 'warming (∂²u/∂x² > 0)',
+          fill: 'tozeroy', fillcolor: 'rgba(88,166,255,0.18)',
+          line: { width: 0 }, yaxis: 'y2', showlegend: false },
+        { x, y: d2u_neg, type: 'scatter', mode: 'none', name: 'cooling (∂²u/∂x² < 0)',
+          fill: 'tozeroy', fillcolor: 'rgba(248,81,73,0.18)',
+          line: { width: 0 }, yaxis: 'y2', showlegend: false },
+        { x, y: d2u,     type: 'scatter', mode: 'lines', name: '∂²u/∂x² Laplacian',
+          line: { color: '#3fb950', width: 1.5 }, yaxis: 'y2' },
+        probeTrace,
+      ];
+
+      /* Clip y2 range for pulse IC at early frames where edges spike */
+      const absMax = Math.max(...d2u.map(v => Math.abs(v)).filter(isFinite), 1);
+      const y2range = absMax > 25 ? [-absMax * 1.05, absMax * 1.05] : null;
+
+      const layout = {
+        paper_bgcolor: '#161b22', plot_bgcolor: '#0d1117',
+        font: { color: '#e6edf3', family: 'monospace' },
+        margin: { t: 40, b: 50, l: 60, r: 75 },
+        height: 420,
+        title: { text: `t = ${t.toFixed(4)}`, font: { size: 11, color: '#8b949e' } },
+        xaxis: { title: 'x', gridcolor: '#30363d', zerolinecolor: '#30363d',
+                 range: [0, 1] },
+        yaxis: { title: 'u(x,t)', gridcolor: '#30363d', zerolinecolor: '#30363d',
+                 range: [-0.05, 1.15], color: '#d4a017',
+                 titlefont: { color: '#d4a017' }, tickfont: { color: '#d4a017' } },
+        yaxis2: { title: '∂u/∂x,  ∂²u/∂x²', overlaying: 'y', side: 'right',
+                  color: '#8b949e', titlefont: { color: '#8b949e' },
+                  tickfont: { color: '#8b949e' }, showgrid: false, zeroline: true,
+                  zerolinecolor: '#30363d', zerolinewidth: 1,
+                  autorange: !y2range,
+                  ...(y2range ? { range: y2range } : {}) },
+        legend: { bgcolor: '#1c2333', bordercolor: '#30363d', borderwidth: 1,
+                  x: 0.01, y: 0.99, xanchor: 'left', yanchor: 'top',
+                  font: { size: 10 } },
+        hovermode: 'x unified',
+      };
+
+      Plotly.react(plotEl, traces, layout, { responsive: true, displayModeBar: false });
+
+      /* Attach click listener exactly once, after first Plotly.react() */
+      if (!listenersAttached) {
+        plotEl.on('plotly_click', handlePlotClick);
+        listenersAttached = true;
+      }
+
+      updateTimeIndicator();
+    }
+
+    /* ── Probe marker trace ────────────────────────────────────────────── */
+    function buildProbeTrace(x, u) {
+      if (probeIdx === null || probeIdx < 1 || probeIdx >= x.length - 1) {
+        return { x: [], y: [], type: 'scatter', mode: 'markers',
+                 marker: { size: 0 }, showlegend: false, yaxis: 'y' };
+      }
+      const i = probeIdx;
+      return {
+        x: [x[i-1], x[i], x[i+1]],
+        y: [u[i-1], u[i], u[i+1]],
+        type: 'scatter', mode: 'markers',
+        marker: { color: ['#58a6ff', '#f0f6fc', '#58a6ff'],
+                  size: [10, 14, 10],
+                  symbol: ['circle', 'diamond', 'circle'],
+                  line: { color: '#d4a017', width: 1.5 } },
+        name: 'Probe', showlegend: false, yaxis: 'y',
+      };
+    }
+
+    /* ── Heatmap (space × time) ────────────────────────────────────────── */
+    function renderHeatmap() {
+      if (!currentData) return;
+      const traces = [{
+        type: 'heatmap',
+        z: currentData.u_history,
+        x: currentData.x,
+        y: currentData.t,
+        colorscale: 'Inferno',
+        zmin: 0, zmax: 1,
+        showscale: true,
+        colorbar: { thickness: 14, len: 0.85,
+                    tickfont: { size: 9, color: '#8b949e' },
+                    outlinewidth: 0 },
+      }];
+      const layout = {
+        paper_bgcolor: '#161b22', plot_bgcolor: '#0d1117',
+        font: { color: '#e6edf3', family: 'monospace' },
+        margin: { t: 20, b: 50, l: 55, r: 70 },
+        height: 230,
+        xaxis: { title: 'x', gridcolor: '#30363d' },
+        yaxis: { title: 'time t', gridcolor: '#30363d' },
+        shapes: [timeLineShape()],
+      };
+      Plotly.react(heatmapEl, traces, layout,
+        { responsive: true, displayModeBar: false });
+    }
+
+    function timeLineShape() {
+      const t = currentData ? currentData.t[frameIdx] : 0;
+      return { type: 'line', xref: 'paper', yref: 'y',
+               x0: 0, x1: 1, y0: t, y1: t,
+               line: { color: '#d4a017', width: 1.5, dash: 'dot' } };
+    }
+
+    function updateTimeIndicator() {
+      if (!currentData || !heatmapEl._fullLayout) return;
+      Plotly.relayout(heatmapEl, { shapes: [timeLineShape()] });
+    }
+
+    /* ── Probe click handler ───────────────────────────────────────────── */
+    function handlePlotClick(eventData) {
+      if (!currentData || !eventData.points.length) return;
+      const xClick = eventData.points[0].x;
+      probeIdx = currentData.x.reduce(
+        (best, xi, i) =>
+          Math.abs(xi - xClick) < Math.abs(currentData.x[best] - xClick) ? i : best,
+        0
+      );
+      renderFrame();
+      updateProbePanel();
+    }
+
+    function updateProbePanel() {
+      if (probeIdx === null || !currentData) return;
+      const i = probeIdx;
+      const x   = currentData.x;
+      if (i < 1 || i >= x.length - 1) return;
+
+      const u   = currentData.u_history[frameIdx];
+      const d2u = currentData.d2udx2_history[frameIdx];
+      const ul = u[i-1], ui = u[i], ur = u[i+1];
+      const avg = (ul + ur) / 2;
+      const dev = avg - ui;
+      const lap = d2u[i];
+
+      probePanel.style.display = 'block';
+      probeTableEl.querySelector('tbody').innerHTML = `
+        <tr><td>u<sub>i−1</sub>&ensp;(left neighbour)</td><td>${ul.toFixed(4)}</td></tr>
+        <tr class="probe-self"><td>u<sub>i</sub>&ensp;(you, at x = ${x[i].toFixed(3)})</td><td>${ui.toFixed(4)}</td></tr>
+        <tr><td>u<sub>i+1</sub>&ensp;(right neighbour)</td><td>${ur.toFixed(4)}</td></tr>
+        <tr class="probe-avg"><td>Neighbor average</td><td>${avg.toFixed(4)}</td></tr>
+        <tr><td>Deviation&ensp;(avg − u<sub>i</sub>)</td><td>${dev.toFixed(4)}</td></tr>
+        <tr class="probe-lap"><td>∂²u/∂x²&ensp;(Laplacian)</td><td>${lap.toFixed(2)}</td></tr>
+      `;
+
+      const warming = dev > 1e-5;
+      const cooling = dev < -1e-5;
+      const verdict = warming ? 'WARM UP' : cooling ? 'COOL DOWN' : 'STAY STABLE';
+      const color   = warming ? '#58a6ff' : cooling ? '#f85149' : '#3fb950';
+      probeVerdict.innerHTML =
+        `<span style="color:${color}; font-weight:600;">→ This point will ${verdict}</span>`;
+    }
+
+    /* ── Controls wiring ───────────────────────────────────────────────── */
+    timeSl.addEventListener('input', () => {
+      frameIdx = parseInt(timeSl.value);
+      renderFrame();
+      if (probeIdx !== null) updateProbePanel();
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (playing) {
+        playing = false;
+        clearInterval(animHandle);
+        playBtn.innerHTML = '&#9654; Play';
+      } else {
+        playing = true;
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+        animHandle = setInterval(() => {
+          if (!currentData) return;
+          frameIdx = (frameIdx + 1) % currentData.t.length;
+          renderFrame();
+          if (probeIdx !== null) updateProbePanel();
+        }, 70);
+      }
+    });
+
+    document.querySelectorAll('input[name="ic"]').forEach(r =>
+      r.addEventListener('change', reload)
+    );
+
+    alphaSl.addEventListener('input', () => {
+      alphaValEl.textContent = ALPHA_VALUES[parseInt(alphaSl.value)];
+      reload();
+    });
+
+    document.addEventListener('DOMContentLoaded', reload);
+  })();
+  </script>
+
+  <!-- ── Chapter-local styles ────────────────────────────────────────────── -->
+  <style>
+    .personal-note {
+      border-left: 3px solid var(--accent);
+      background: #12181f;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0 2.5rem;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: #c9d1d9;
+    }
+    .personal-note p { margin-bottom: 0.75rem; }
+    .personal-note p:last-child { margin-bottom: 0; }
+
+    .check-label {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    /* Equation callout box */
+    .equation-box {
+      background: #0d1117;
+      border: 1px solid #d4a01755;
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+    .equation-box p { margin: 0 0 0.4rem; }
+    .equation-box p:last-child { margin-bottom: 0; }
+    .eq-caption {
+      font-family: var(--font-sans);
+      font-size: 0.775rem;
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Time scrubber strip */
+    .time-scrubber {
+      padding: 0.6rem 1.25rem 0.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: #0d1117;
+    }
+
+    /* Play button */
+    .play-btn {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      background: var(--bg-card);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .play-btn:hover { background: #d4a01722; }
+
+    /* Color legend swatches */
+    .legend-swatch {
+      font-family: var(--font-sans);
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.6;
+    }
+    .legend-swatch::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 0.65rem; height: 2px;
+      border-radius: 1px;
+    }
+    .legend-swatch.amber::before   { background: #d4a017; }
+    .legend-swatch.blue::before    { background: #58a6ff; }
+    .legend-swatch.green::before   { background: #3fb950; }
+    .legend-swatch.red-fill::before  { background: rgba(248,81,73,0.7); height: 8px; border-radius: 2px; }
+    .legend-swatch.blue-fill::before { background: rgba(88,166,255,0.7); height: 8px; border-radius: 2px; }
+
+    /* Neighbor probe panel */
+    #neighbor-probe {
+      display: none;
+      padding: 0.85rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: #0d1117;
+    }
+    .probe-header {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    #probe-table {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 440px;
+      margin-bottom: 0.6rem;
+    }
+    #probe-table td { padding: 0.18rem 0.5rem; color: var(--text-muted); }
+    #probe-table td:last-child { text-align: right; color: var(--text); }
+    #probe-table tr.probe-self td   { color: var(--accent); font-weight: 600; }
+    #probe-table tr.probe-avg td   { border-top: 1px solid var(--border); padding-top: 0.4rem; }
+    #probe-table tr.probe-lap td   { color: #3fb950; font-weight: 600; }
+    #probe-verdict {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+    }
+
+    /* Ch3 teaser blockquote */
+    blockquote.teaser-quote {
+      border-left: 3px solid #58a6ff;
+      background: #0d1117;
+      margin: 1.5rem 0;
+      padding: 1rem 1.5rem;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: #c9d1d9;
+    }
+  </style>
+
+</body>
+</html>
