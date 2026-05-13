@@ -3,14 +3,16 @@
   'use strict';
 
   const CHAPTERS = [
-    { path: '/chapters/01-nature-and-math/index.html', title: 'Nature & Math' },
-    { path: '/chapters/02-intuition/index.html',       title: 'Building Intuition' },
-    { path: '/chapters/03-fourier-story/index.html',   title: "Fourier's Story" },
-    { path: '/chapters/04-heat-equation/index.html',   title: 'The Heat Equation' },
-    { path: '/chapters/05-pde-classification/index.html', title: 'PDE Classification' },
-    { path: '/chapters/06-elliptic/index.html',        title: 'Elliptic PDEs' },
-    { path: '/chapters/07-parabolic/index.html',       title: 'Parabolic PDEs' },
-    { path: '/chapters/08-hyperbolic/index.html',      title: 'Hyperbolic PDEs' },
+    { path: '/chapters/01-nature-and-math/index.html',   title: 'Nature & Math' },
+    { path: '/chapters/02-nature-patterns/index.html',   title: "Nature's Patterns" },
+    { path: '/chapters/03-intuition/index.html',         title: 'Building Intuition' },
+    { path: '/chapters/04-fourier-story/index.html',     title: "Fourier's Story" },
+    { path: '/chapters/05-heat-equation/index.html',     title: 'Heat & Diffusion' },
+    { path: '/chapters/06-wave-equation/index.html',     title: 'The Wave Equation' },
+    { path: '/chapters/07-reaction-diffusion/index.html', title: 'Reaction-Diffusion' },
+    { path: '/chapters/08-conservation-laws/index.html', title: 'Conservation Laws' },
+    { path: '/chapters/09-pde-classification/index.html', title: 'PDE Classification' },
+    { path: '/chapters/10-elliptic/index.html',          title: 'Elliptic PDEs' },
   ];
 
   function currentIndex() {

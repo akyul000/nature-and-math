@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02 · Nature's Patterns — Nature &amp; Math</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <script>
+    MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../../index.html" class="site-title">Nature &amp; Math</a>
+      <nav class="top-nav">
+        <a href="../../index.html">Chapters</a>
+        <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="chapter-header">
+    <a href="../../index.html">Home</a>
+    <span class="sep">/</span>
+    Chapter 02
+    <span class="sep">/</span>
+    Nature's Patterns
+  </div>
+
+  <article class="chapter-body">
+
+    <h1>Nature's Patterns</h1>
+    <p class="subtitle">Before the equations, there are the phenomena.</p>
+
+    <!-- ── Personal note ─────────────────────────────────────────────────── -->
+    <div class="personal-note">
+      <p>
+        Mathematics is usually introduced as the answer to a question someone else has already
+        asked. You are handed the heat equation and told to solve it. You are given Newton's
+        laws and asked to apply them. The question — <em>why does the world behave this way?</em>
+        — is treated as settled.
+      </p>
+      <p>
+        But before there were equations, there were observations. Patterns on animal skin that
+        repeat across species. Mould that finds the shortest path through a maze without a brain.
+        Traffic jams that travel backward against the direction of cars. Soap films that settle
+        into shapes no engineer would have guessed.
+      </p>
+      <p>
+        This chapter is a gallery of those observations. No equations yet — just the phenomena.
+        By the end of this series, you will be able to write down exactly why each one occurs.
+        Come back here when you do. The answer, when it arrives, will feel more satisfying for
+        having waited.
+      </p>
+    </div>
+
+    <!-- ── Section 1: Turing Patterns ────────────────────────────────────── -->
+    <h2>Turing patterns — two chemicals, infinite variety</h2>
+
+    <p>
+      Look at the skin of a leopard, the shell of a nautilus, the body of an angelfish.
+      The patterns are different — spots, rings, stripes, labyrinths — yet they all share
+      a quality that is hard to articulate: they look generated, not painted. Orderly but
+      not uniform. Complex but not random.
+    </p>
+
+    <p>
+      In 1952, Alan Turing — best known for his work in computation and codebreaking —
+      published a paper titled <em>"The Chemical Basis of Morphogenesis."</em>
+      It proposed that these patterns could be explained by just two interacting chemicals:
+      an <strong>activator</strong> that promotes its own production, and an
+      <strong>inhibitor</strong> that suppresses both. If the inhibitor diffuses faster than
+      the activator, the system becomes unstable in a very specific way: small random
+      fluctuations grow into large, organised patterns.
+    </p>
+
+    <p>
+      The mechanism is elegant. Where the activator is slightly more concentrated, it
+      amplifies itself — creating a local peak. But because the inhibitor also spreads,
+      and spreads faster, nearby peaks are suppressed. The result is a competition between
+      local activation and long-range inhibition. Peaks form, but not too close together.
+      The spacing is set by the ratio of the two diffusion rates.
+    </p>
+
+    <p>
+      The model below is the <strong>Gray-Scott system</strong>, one of the most-studied
+      realisation of Turing's idea. Two chemical species, $u$ (the activator) and $v$
+      (the inhibitor), evolve according to:
+    </p>
+
+    <p style="text-align:center; margin: 1.25rem 0;">
+      $\dfrac{\partial u}{\partial t} = D_u\,\nabla^2 u - uv^2 + F(1-u)$
+      &emsp;&emsp;
+      $\dfrac{\partial v}{\partial t} = D_v\,\nabla^2 v + uv^2 - (F+k)\,v$
+    </p>
+
+    <p>
+      The parameters $F$ (feed rate) and $k$ (kill rate) determine which pattern forms.
+      A small change in $F$ or $k$ can shift the system from stationary spots to moving
+      worms to labyrinths. Explore below.
+    </p>
+
+    <!-- ── Turing simulation ──────────────────────────────────────────────── -->
+    <div class="sim-section" id="turing-explorer">
+      <div class="sim-title">Interactive · Gray-Scott Pattern Generator</div>
+
+      <div style="padding: 0.9rem 1.25rem 0; font-family: var(--font-sans); font-size: 0.8rem; color: var(--text-muted);">
+        Select a preset to see how the pattern evolves from a random seed. The colour shows
+        the concentration of the activator $u$: bright = high, dark = low.
+      </div>
+
+      <!-- Preset buttons -->
+      <div class="preset-row" id="preset-row">
+        <button class="preset-btn active" data-preset="spots">Spots</button>
+        <button class="preset-btn" data-preset="stripes">Stripes</button>
+        <button class="preset-btn" data-preset="labyrinth">Labyrinth</button>
+        <button class="preset-btn" data-preset="worms">Worms</button>
+        <button class="preset-btn" data-preset="coral">Coral</button>
+        <button class="preset-btn" data-preset="mitosis">Mitosis</button>
+      </div>
+
+      <!-- Time scrubber -->
+      <div class="time-scrubber">
+        <div class="slider-row" style="gap: 0.75rem; align-items: center;">
+          <button id="turing-play" class="play-btn">&#9654; Play</button>
+          <input type="range" id="turing-time" min="0" max="4" step="1" value="0" style="flex:1;" />
+          <span class="val-display" id="turing-time-val">step 0</span>
+        </div>
+      </div>
+
+      <!-- Plot -->
+      <div id="turing-plot" class="sim-plot" style="min-height:380px;"></div>
+
+      <!-- Param display -->
+      <div id="turing-params" style="padding:0.5rem 1.25rem; font-family:var(--font-mono); font-size:0.775rem; color:var(--text-muted);"></div>
+
+      <div class="sim-status" id="turing-status">Loading…</div>
+    </div>
+
+    <p>
+      The striking observation is that <em>both equations are local</em>. Each point only
+      knows about its immediate neighbours (through the Laplacian $\nabla^2$) and its own
+      concentrations. There is no global template, no blueprint being followed.
+      The pattern emerges spontaneously from local interactions alone.
+    </p>
+
+    <p class="chapter-link-teaser">
+      In <a href="../07-reaction-diffusion/index.html">Chapter 07</a>, we will derive
+      exactly why these patterns form — using linear stability analysis to predict the
+      wavelength of the pattern from the model's parameters.
+    </p>
+
+    <!-- ── Section 2: Physarum ────────────────────────────────────────────── -->
+    <h2>Physarum polycephalum — the network solver with no brain</h2>
+
+    <div class="phenomenon-layout">
+      <div class="phenomenon-text">
+        <p>
+          <em>Physarum polycephalum</em> is a single-celled organism — technically one cell, though
+          it can grow to cover square metres. It has no brain, no nervous system, no sense organs
+          in any conventional meaning. Yet it solves problems.
+        </p>
+        <p>
+          Place food sources at a few locations and let the slime mould explore. Initially it
+          spreads randomly in all directions. Then it begins to retract. Paths that lead nowhere
+          are abandoned. Paths that lead to food are reinforced. After a few hours, the mould
+          has formed a transport network connecting all the food sources — and the network is
+          surprisingly efficient.
+        </p>
+        <p>
+          In 2010, Tero et al. placed oat flakes on a map of Japan at positions corresponding
+          to the cities around Tokyo, then let <em>Physarum</em> explore. The network it formed
+          after 26 hours closely matched the actual Tokyo rail system — one that engineers had
+          spent decades optimising.
+        </p>
+        <p>
+          The mechanism is a form of <strong>chemotaxis</strong>: the organism senses chemical
+          gradients and moves accordingly. Tubes that carry more flow grow wider; those that carry
+          less, narrow and eventually disappear. The result is a physical computation — an
+          optimisation process implemented in biology without any central controller.
+        </p>
+      </div>
+      <figure class="phenomenon-figure">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="nature-svg">
+          <!-- Network graph representing slime mold paths -->
+          <!-- Nodes -->
+          <circle cx="100" cy="30"  r="7" fill="#d4a017" />
+          <circle cx="170" cy="80"  r="7" fill="#d4a017" />
+          <circle cx="150" cy="165" r="7" fill="#d4a017" />
+          <circle cx="50"  cy="165" r="7" fill="#d4a017" />
+          <circle cx="30"  cy="80"  r="7" fill="#d4a017" />
+          <circle cx="100" cy="110" r="5" fill="#58a6ff" opacity="0.7"/>
+          <!-- Edges — width encodes flow (thick = heavily used) -->
+          <line x1="100" y1="30"  x2="170" y2="80"  stroke="#d4a017" stroke-width="4" opacity="0.9"/>
+          <line x1="170" y1="80"  x2="150" y2="165" stroke="#d4a017" stroke-width="6" opacity="0.9"/>
+          <line x1="150" y1="165" x2="50"  y2="165" stroke="#d4a017" stroke-width="3" opacity="0.7"/>
+          <line x1="50"  y1="165" x2="30"  y2="80"  stroke="#d4a017" stroke-width="5" opacity="0.9"/>
+          <line x1="30"  y1="80"  x2="100" y2="30"  stroke="#d4a017" stroke-width="2" opacity="0.5"/>
+          <!-- Hub connections -->
+          <line x1="100" y1="30"  x2="100" y2="110" stroke="#58a6ff" stroke-width="2.5" opacity="0.6" stroke-dasharray="4,3"/>
+          <line x1="170" y1="80"  x2="100" y2="110" stroke="#58a6ff" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
+          <line x1="150" y1="165" x2="100" y2="110" stroke="#58a6ff" stroke-width="3" opacity="0.6" stroke-dasharray="4,3"/>
+          <line x1="50"  y1="165" x2="100" y2="110" stroke="#58a6ff" stroke-width="2" opacity="0.5" stroke-dasharray="4,3"/>
+          <line x1="30"  y1="80"  x2="100" y2="110" stroke="#58a6ff" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
+        </svg>
+        <figcaption>Network formed by <em>Physarum</em>. Edge thickness represents flow rate — the organism spontaneously routes resources through efficient paths.</figcaption>
+      </figure>
+    </div>
+
+    <p class="chapter-link-teaser">
+      The mathematical model for this process — the Keller-Segel equations — is a cousin
+      of the heat equation. We will see it in <a href="../05-heat-equation/index.html">Chapter 05</a>.
+    </p>
+
+    <!-- ── Section 3: Traffic jams ───────────────────────────────────────── -->
+    <h2>Phantom traffic jams — the wave that travels backwards</h2>
+
+    <div class="phenomenon-layout">
+      <div class="phenomenon-text">
+        <p>
+          You are driving on a motorway. Traffic is flowing freely. Then, for no apparent
+          reason, you slow to a crawl. After ten minutes of near-standstill, traffic
+          suddenly releases and you are back to motorway speed. You never see an accident,
+          a merge point, or any obvious cause.
+        </p>
+        <p>
+          What happened was a <strong>phantom jam</strong>: a traffic jam with no physical
+          cause, arising spontaneously from density fluctuations.
+        </p>
+        <p>
+          Above a critical vehicle density, a small perturbation — one driver braking
+          slightly harder than necessary — can amplify. The car behind brakes a bit more.
+          The car behind that, more still. A region of high density forms and propagates
+          <em>backward</em> against the direction of traffic, at roughly 15 km/h.
+        </p>
+        <p>
+          This is a <strong>shock wave</strong> — the same mathematical object that
+          appears in gas dynamics and river hydraulics. The jam travels upstream because
+          information about congestion travels at a different speed than the cars
+          themselves.
+        </p>
+      </div>
+      <figure class="phenomenon-figure">
+        <!-- Space-time diagram: x = road position, y = time (up), shock goes left -->
+        <svg viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" class="nature-svg">
+          <!-- Axes -->
+          <line x1="30" y1="180" x2="185" y2="180" stroke="#30363d" stroke-width="1.5"/>
+          <line x1="30" y1="180" x2="30"  y2="15"  stroke="#30363d" stroke-width="1.5"/>
+          <text x="185" y="185" font-size="9" fill="#8b949e" font-family="monospace">x</text>
+          <text x="22"  y="15"  font-size="9" fill="#8b949e" font-family="monospace">t</text>
+          <!-- Free-flow world lines (rightward diagonals, evenly spaced) -->
+          <g opacity="0.5" stroke="#58a6ff" stroke-width="1">
+            <line x1="40"  y1="180" x2="130" y2="60"/>
+            <line x1="55"  y1="180" x2="145" y2="60"/>
+            <line x1="70"  y1="180" x2="160" y2="60"/>
+            <line x1="85"  y1="180" x2="170" y2="60"/>
+          </g>
+          <!-- Congested world lines (steep — cars barely moving) -->
+          <g opacity="0.8" stroke="#d4a017" stroke-width="1.2">
+            <line x1="98" y1="150" x2="102" y2="60"/>
+            <line x1="104" y1="150" x2="108" y2="60"/>
+            <line x1="110" y1="150" x2="113" y2="60"/>
+            <line x1="116" y1="150" x2="118" y2="60"/>
+          </g>
+          <!-- Shock front — backward-traveling line -->
+          <line x1="120" y1="150" x2="85" y2="60" stroke="#f85149" stroke-width="2.5" stroke-dasharray="5,3"/>
+          <!-- Labels -->
+          <text x="135" y="130" font-size="8" fill="#58a6ff" font-family="monospace">free flow</text>
+          <text x="100" y="190" font-size="8" fill="#d4a017" font-family="monospace">jam</text>
+          <text x="58"  y="85"  font-size="8" fill="#f85149" font-family="monospace" transform="rotate(-50,72,92)">shock</text>
+        </svg>
+        <figcaption>Space-time diagram. Blue lines: freely flowing cars (moving right and forward in time). Amber lines: congested cars (barely moving). The red dashed line is the shock front, travelling backward.</figcaption>
+      </figure>
+    </div>
+
+    <p class="chapter-link-teaser">
+      In <a href="../08-conservation-laws/index.html">Chapter 08</a>, we will derive the
+      LWR traffic model — a single conservation law — and use it to calculate exactly
+      how fast the shock travels and why it goes backward.
+    </p>
+
+    <!-- ── Section 4: Soap bubbles ───────────────────────────────────────── -->
+    <h2>Why soap bubbles are spherical</h2>
+
+    <div class="phenomenon-layout">
+      <div class="phenomenon-text">
+        <p>
+          A soap bubble is a thin film of liquid enclosing a volume of air. The surface
+          tension of the liquid creates a force that tries to minimise the total surface
+          area. Among all shapes enclosing a given volume, the one with the smallest
+          surface area is the sphere. This is why soap bubbles are round.
+        </p>
+        <p>
+          The more interesting question is: what shape does a soap film take when it is
+          stretched across an arbitrary wire frame? This is <strong>Plateau's problem</strong>,
+          posed by the Belgian physicist Joseph Plateau in 1849. He noticed experimentally
+          that the film always takes the shape of a <em>minimal surface</em> — one with
+          zero mean curvature at every point.
+        </p>
+        <p>
+          The condition of zero mean curvature is not a physical assumption; it is a
+          mathematical consequence of minimising area. And zero mean curvature is
+          precisely the statement of the <strong>Laplace equation</strong>
+          $\nabla^2 u = 0$ — the simplest elliptic PDE.
+        </p>
+        <p>
+          The soap film is an analogue computer. Dip a wire frame in soap solution and
+          you have instantly solved a PDE — a computation that would require significant
+          numerical effort to perform digitally for a complex frame shape.
+        </p>
+      </div>
+      <figure class="phenomenon-figure">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="nature-svg">
+          <!-- Soap bubble: sphere with iridescent gradient -->
+          <defs>
+            <radialGradient id="bubble-grad" cx="38%" cy="35%" r="60%">
+              <stop offset="0%"   stop-color="#e0f0ff" stop-opacity="0.9"/>
+              <stop offset="40%"  stop-color="#58a6ff" stop-opacity="0.4"/>
+              <stop offset="75%"  stop-color="#d4a017" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#3fb950" stop-opacity="0.5"/>
+            </radialGradient>
+            <radialGradient id="bubble-rim" cx="50%" cy="50%" r="50%">
+              <stop offset="80%" stop-color="transparent"/>
+              <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.6"/>
+            </radialGradient>
+          </defs>
+          <circle cx="100" cy="100" r="72" fill="url(#bubble-grad)" stroke="#58a6ff" stroke-width="1.5" stroke-opacity="0.5"/>
+          <circle cx="100" cy="100" r="72" fill="url(#bubble-rim)"/>
+          <!-- Specular highlight -->
+          <ellipse cx="78" cy="72" rx="18" ry="10" fill="white" opacity="0.4" transform="rotate(-30,78,72)"/>
+          <ellipse cx="75" cy="70" rx="7"  ry="4"  fill="white" opacity="0.7" transform="rotate(-30,75,70)"/>
+        </svg>
+        <figcaption>A soap bubble minimises its surface area for the enclosed volume. The resulting shape — a sphere — is the solution to a variational problem governed by the Laplace equation.</figcaption>
+      </figure>
+    </div>
+
+    <p class="chapter-link-teaser">
+      In <a href="../10-elliptic/index.html">Chapter 10</a>, we will meet the elliptic
+      PDEs that describe minimal surfaces — and solve Plateau's problem numerically.
+    </p>
+
+    <!-- ── Section 5: Ant trails ─────────────────────────────────────────── -->
+    <h2>Ant pheromone trails — collective intelligence from local rules</h2>
+
+    <div class="phenomenon-layout">
+      <div class="phenomenon-text">
+        <p>
+          An ant leaving its nest in search of food wanders nearly randomly. When it
+          finds food, it returns to the nest along a shorter path than it came — and
+          along the way, it deposits a chemical signal called a <strong>pheromone</strong>.
+          Other ants, detecting the pheromone, are biased toward following it. Those that
+          do find the food faster, and deposit more pheromone on the same path.
+        </p>
+        <p>
+          This is <strong>stigmergy</strong>: indirect coordination through the
+          environment. No ant sends a message to any other ant. There is no foreman
+          directing traffic. The trail emerges from the interaction between individual
+          behaviour and a chemical signal that diffuses and evaporates over time.
+        </p>
+        <p>
+          The competition between deposition (along successful paths) and evaporation
+          (everywhere) means that shorter paths accumulate pheromone faster than longer
+          ones — simply because ants traversing a shorter path return sooner and deposit
+          again. Over time, the shorter path dominates. The colony has found the
+          optimum without any individual ever knowing what an optimum is.
+        </p>
+        <p>
+          The mathematics involves a diffusion equation for pheromone concentration
+          combined with a reinforcement mechanism — the same interplay of diffusion
+          and reaction that we will study more formally later.
+        </p>
+      </div>
+      <figure class="phenomenon-figure">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="nature-svg">
+          <!-- Nest (left) and Food (right) -->
+          <circle cx="28"  cy="100" r="14" fill="#d4a017" opacity="0.85"/>
+          <text x="28"  y="104" font-size="8" fill="#0d1117" font-family="monospace" text-anchor="middle">nest</text>
+          <circle cx="172" cy="100" r="14" fill="#3fb950" opacity="0.85"/>
+          <text x="172" y="104" font-size="8" fill="#0d1117" font-family="monospace" text-anchor="middle">food</text>
+          <!-- Short path (top, thick — dominant) -->
+          <path d="M 42 100 Q 100 55 158 100" stroke="#d4a017" stroke-width="6" fill="none" opacity="0.85"/>
+          <!-- Long path (bottom, thin — less used) -->
+          <path d="M 42 100 Q 100 155 158 100" stroke="#d4a017" stroke-width="2" fill="none" opacity="0.4"/>
+          <!-- Ants on short path -->
+          <circle cx="75"  cy="73" r="3" fill="#f0f6fc" opacity="0.9"/>
+          <circle cx="100" cy="62" r="3" fill="#f0f6fc" opacity="0.9"/>
+          <circle cx="125" cy="73" r="3" fill="#f0f6fc" opacity="0.9"/>
+          <!-- Pheromone diffusion cloud on short path -->
+          <path d="M 42 100 Q 100 55 158 100" stroke="#d4a017" stroke-width="18" fill="none" opacity="0.07"/>
+          <!-- Label -->
+          <text x="100" y="48" font-size="8" fill="#d4a017" font-family="monospace" text-anchor="middle">shorter path</text>
+          <text x="100" y="170" font-size="8" fill="#8b949e" font-family="monospace" text-anchor="middle">longer path (fading)</text>
+        </svg>
+        <figcaption>Two paths between nest and food. The shorter path accumulates pheromone faster — ants return sooner and reinforce it. Evaporation kills the longer trail. No ant plans this.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ── Section 6: The common thread ──────────────────────────────────── -->
+    <h2>The common thread</h2>
+
+    <p>
+      Five phenomena. Completely different domains. But the same underlying structure:
+    </p>
+
+    <ul>
+      <li>Local rules acting at every point in space and time.</li>
+      <li>No central authority, no global blueprint.</li>
+      <li>Complex, organised behaviour emerging from simple interactions.</li>
+    </ul>
+
+    <p>
+      The mathematical language for this kind of system is the <strong>partial differential
+      equation</strong> (PDE). A PDE describes how a quantity changes in space and in time,
+      based only on local information — its value here, its gradient here, its curvature here.
+      It cannot see across the domain. Yet the collective behaviour of all those local
+      interactions produces the global pattern.
+    </p>
+
+    <div class="callout">
+      <p>
+        The next chapter builds the language. What does it mean to take a derivative in space?
+        In time? What is the Laplacian, physically? Once you understand the symbols, the
+        equations in the chapters that follow will not feel arbitrary — they will feel like
+        the only reasonable way to write down what the physics is saying.
+      </p>
+    </div>
+
+    <nav class="chapter-nav-footer" aria-label="chapter navigation">
+      <!-- injected by nav.js -->
+    </nav>
+
+  </article>
+
+  <footer class="site-footer">
+    <p>Built with curiosity. &mdash;
+      <a href="https://github.com/akyul000/nature-and-math" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/sim-viewer.js"></script>
+
+  <script>
+  /* ── Chapter 02: Gray-Scott Turing Pattern Explorer ───────────────────── */
+  (function () {
+    'use strict';
+
+    const STEP_LABELS = ['step 0', 'step 500', 'step 1,000', 'step 3,000', 'step 8,000'];
+    const DATA_DIR    = './data/';
+
+    let currentPreset = 'spots';
+    let frameIdx      = 0;
+    let playing       = false;
+    let animHandle    = null;
+    let cache         = {};
+
+    const plotEl    = document.getElementById('turing-plot');
+    const timeSlEl  = document.getElementById('turing-time');
+    const timeValEl = document.getElementById('turing-time-val');
+    const playBtn   = document.getElementById('turing-play');
+    const statusEl  = document.getElementById('turing-status');
+    const paramsEl  = document.getElementById('turing-params');
+
+    /* ── Data loading ──────────────────────────────────────────────────── */
+    async function reload() {
+      const url = DATA_DIR + `gray_scott_${currentPreset}.json`;
+      statusEl.textContent = `Loading ${currentPreset}…`;
+
+      if (!cache[currentPreset]) {
+        try {
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error(resp.status);
+          cache[currentPreset] = await resp.json();
+        } catch (_) {
+          statusEl.textContent =
+            'Could not load data — run simulations/reaction_diffusion/generate_data.py first.';
+          return;
+        }
+      }
+
+      const d = cache[currentPreset];
+      frameIdx = 0;
+      timeSlEl.value = 0;
+      timeValEl.textContent = STEP_LABELS[0];
+
+      const p = d.params;
+      paramsEl.textContent =
+        `F = ${p.F}  ·  k = ${p.k}  ·  Du = ${p.Du}  ·  Dv = ${p.Dv}  ·  ${d.desc}`;
+
+      renderFrame();
+      statusEl.textContent = `Loaded · ${currentPreset} · ${d.nx}×${d.nx} grid`;
+    }
+
+    /* ── Frame rendering ───────────────────────────────────────────────── */
+    function renderFrame() {
+      const d = cache[currentPreset];
+      if (!d) return;
+
+      const nx     = d.nx;
+      const u_flat = d.u[frameIdx];
+
+      /* Reshape flat array → 2D for Plotly heatmap */
+      const z = [];
+      for (let i = 0; i < nx; i++) {
+        z.push(u_flat.slice(i * nx, (i + 1) * nx));
+      }
+
+      const traces = [{
+        type: 'heatmap',
+        z,
+        colorscale: 'Plasma',
+        zmin: 0, zmax: 1,
+        showscale: false,
+      }];
+
+      const layout = {
+        paper_bgcolor: '#0d1117',
+        plot_bgcolor:  '#0d1117',
+        margin: { t: 8, b: 8, l: 8, r: 8 },
+        height: 380,
+        xaxis: { visible: false, scaleanchor: 'y', scaleratio: 1 },
+        yaxis: { visible: false },
+      };
+
+      Plotly.react(plotEl, traces, layout,
+        { responsive: true, displayModeBar: false });
+    }
+
+    /* ── Controls ──────────────────────────────────────────────────────── */
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPreset = btn.dataset.preset;
+        frameIdx = 0;
+        timeSlEl.value = 0;
+        timeValEl.textContent = STEP_LABELS[0];
+        stopAnimation();
+        reload();
+      });
+    });
+
+    timeSlEl.addEventListener('input', () => {
+      frameIdx = parseInt(timeSlEl.value);
+      timeValEl.textContent = STEP_LABELS[frameIdx];
+      renderFrame();
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (playing) {
+        stopAnimation();
+      } else {
+        playing = true;
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+        animHandle = setInterval(() => {
+          frameIdx = (frameIdx + 1) % 5;
+          timeSlEl.value = frameIdx;
+          timeValEl.textContent = STEP_LABELS[frameIdx];
+          renderFrame();
+        }, 800);
+      }
+    });
+
+    function stopAnimation() {
+      playing = false;
+      clearInterval(animHandle);
+      playBtn.innerHTML = '&#9654; Play';
+    }
+
+    document.addEventListener('DOMContentLoaded', reload);
+  })();
+  </script>
+
+  <!-- ── Chapter-local styles ────────────────────────────────────────────── -->
+  <style>
+    .personal-note {
+      border-left: 3px solid var(--accent);
+      background: #12181f;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0 2.5rem;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: #c9d1d9;
+    }
+    .personal-note p { margin-bottom: 0.75rem; }
+    .personal-note p:last-child { margin-bottom: 0; }
+
+    /* Preset button row */
+    .preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .preset-btn {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.3rem 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .preset-btn:hover  { border-color: var(--accent); color: var(--accent); }
+    .preset-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #d4a01715;
+      font-weight: 600;
+    }
+
+    /* Play button */
+    .play-btn {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      background: var(--bg-card);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .play-btn:hover { background: #d4a01722; }
+
+    /* Time scrubber strip */
+    .time-scrubber {
+      padding: 0.55rem 1.25rem 0.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: #0d1117;
+    }
+
+    /* Two-column layout for text + figure pairs */
+    .phenomenon-layout {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin: 1.5rem 0 1rem;
+    }
+    .phenomenon-text { flex: 1; min-width: 0; }
+    .phenomenon-text p { margin-bottom: 0.9rem; }
+    .phenomenon-figure {
+      flex: 0 0 210px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .phenomenon-figure figcaption {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* SVG illustrations */
+    .nature-svg {
+      width: 200px;
+      height: 200px;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    /* Chapter callback link styling */
+    .chapter-link-teaser {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      border-left: 2px solid #58a6ff44;
+      padding-left: 0.75rem;
+      margin: 1rem 0 2rem;
+      font-style: italic;
+    }
+    .chapter-link-teaser a { color: #58a6ff; }
+
+    /* Closing callout */
+    .callout {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout p { margin: 0; color: var(--text); }
+
+    /* Responsive: stack on narrow screens */
+    @media (max-width: 600px) {
+      .phenomenon-layout { flex-direction: column; }
+      .phenomenon-figure  { flex: none; width: 100%; align-items: center; }
+    }
+  </style>
+
+</body>
+</html>
