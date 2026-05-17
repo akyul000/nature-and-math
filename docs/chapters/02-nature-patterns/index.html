@@ -86,7 +86,7 @@
 
     <p>
       In 1952, Alan Turing — best known for his work in computation and codebreaking —
-      published a paper titled <em>"The Chemical Basis of Morphogenesis."</em>
+      published a paper titled <em>"The Chemical Basis of Morphogenesis."</em><a href="#ref-1" class="cite-ref">[1]</a>
       It proposed that these patterns could be explained by just two interacting chemicals:
       an <strong>activator</strong> that promotes its own production, and an
       <strong>inhibitor</strong> that suppresses both. If the inhibitor diffuses faster than
@@ -115,9 +115,9 @@
     </p>
 
     <p>
-      The parameters $F$ (feed rate) and $k$ (kill rate) determine which pattern forms.
+      The parameters $F$ (feed rate) and $k$ (kill rate) determine which pattern forms.<a href="#ref-2" class="cite-ref">[2]</a>
       A small change in $F$ or $k$ can shift the system from stationary spots to moving
-      worms to labyrinths. Explore below.
+      worms to labyrinths.<a href="#ref-3" class="cite-ref">[3]</a> Explore below.
     </p>
 
     <!-- ── Turing simulation ──────────────────────────────────────────────── -->
@@ -185,13 +185,13 @@
           spreads randomly in all directions. Then it begins to retract. Paths that lead nowhere
           are abandoned. Paths that lead to food are reinforced. After a few hours, the mould
           has formed a transport network connecting all the food sources — and the network is
-          surprisingly efficient.
+          surprisingly efficient.<a href="#ref-4" class="cite-ref">[4]</a>
         </p>
         <p>
           In 2010, Tero et al. placed oat flakes on a map of Japan at positions corresponding
           to the cities around Tokyo, then let <em>Physarum</em> explore. The network it formed
           after 26 hours closely matched the actual Tokyo rail system — one that engineers had
-          spent decades optimising.
+          spent decades optimising.<a href="#ref-5" class="cite-ref">[5]</a>
         </p>
         <p>
           The mechanism is a form of <strong>chemotaxis</strong>: the organism senses chemical
@@ -251,7 +251,7 @@
           Above a critical vehicle density, a small perturbation — one driver braking
           slightly harder than necessary — can amplify. The car behind brakes a bit more.
           The car behind that, more still. A region of high density forms and propagates
-          <em>backward</em> against the direction of traffic, at roughly 15 km/h.
+          <em>backward</em> against the direction of traffic, at roughly 15 km/h.<a href="#ref-6" class="cite-ref">[6]</a><a href="#ref-7" class="cite-ref">[7]</a>
         </p>
         <p>
           This is a <strong>shock wave</strong> — the same mathematical object that
@@ -313,7 +313,7 @@
         <p>
           The more interesting question is: what shape does a soap film take when it is
           stretched across an arbitrary wire frame? This is <strong>Plateau's problem</strong>,
-          posed by the Belgian physicist Joseph Plateau in 1849. He noticed experimentally
+          posed by the Belgian physicist Joseph Plateau in 1849.<a href="#ref-8" class="cite-ref">[8]</a> He noticed experimentally
           that the film always takes the shape of a <em>minimal surface</em> — one with
           zero mean curvature at every point.
         </p>
@@ -372,7 +372,7 @@
           do find the food faster, and deposit more pheromone on the same path.
         </p>
         <p>
-          This is <strong>stigmergy</strong>: indirect coordination through the
+          This is <strong>stigmergy</strong><a href="#ref-9" class="cite-ref">[9]</a>: indirect coordination through the
           environment. No ant sends a message to any other ant. There is no foreman
           directing traffic. The trail emerges from the interaction between individual
           behaviour and a chemical signal that diffuses and evaporates over time.
@@ -444,6 +444,21 @@
         the only reasonable way to write down what the physics is saying.
       </p>
     </div>
+
+    <section class="chapter-refs">
+      <h2>References</h2>
+      <ol>
+        <li id="ref-1">Turing, A. M. (1952). The chemical basis of morphogenesis. <em>Philosophical Transactions of the Royal Society of London. Series B, Biological Sciences</em>, 237(641), 37–72.</li>
+        <li id="ref-2">Gray, P., &amp; Scott, S. K. (1983). Autocatalytic reactions in the isothermal, continuous stirred tank reactor: Isolas and other forms of multistability. <em>Chemical Engineering Science</em>, 38(1), 29–43.</li>
+        <li id="ref-3">Pearson, J. E. (1993). Complex patterns in a simple system. <em>Science</em>, 261(5118), 189–192.</li>
+        <li id="ref-4">Nakagaki, T., Yamada, H., &amp; Tóth, Á. (2000). Maze-solving by an amoeboid organism. <em>Nature</em>, 407, 470.</li>
+        <li id="ref-5">Tero, A., Takagi, S., Saigusa, T., Ito, K., Bebber, D. P., Fricker, M. D., … &amp; Nakagaki, T. (2010). Rules for biologically inspired adaptive network design. <em>Science</em>, 327(5964), 439–442.</li>
+        <li id="ref-6">Lighthill, M. J., &amp; Whitham, G. B. (1955). On kinematic waves. II. A theory of traffic flow on long crowded roads. <em>Proceedings of the Royal Society of London. Series A</em>, 229(1178), 317–345.</li>
+        <li id="ref-7">Sugiyama, Y., Fukui, M., Kikuchi, M., Hasebe, K., Nakayama, A., Nishinari, K., … &amp; Yukawa, S. (2008). Traffic jams without bottlenecks — experimental evidence for the physical mechanism of the formation of a jam. <em>New Journal of Physics</em>, 10(3), 033001.</li>
+        <li id="ref-8">Plateau, J. (1873). <em>Statique expérimentale et théorique des liquides soumis aux seules forces moléculaires</em>. Gauthier-Villars.</li>
+        <li id="ref-9">Grassé, P.-P. (1959). La reconstruction du nid et les coordinations inter-individuelles chez <em>Bellicositermes natalensis</em> et <em>Cubitermes</em> sp. La théorie de la stigmergie. <em>Insectes Sociaux</em>, 6(1), 41–80.</li>
+      </ol>
+    </section>
 
     <nav class="chapter-nav-footer" aria-label="chapter navigation">
       <!-- injected by nav.js -->
@@ -710,6 +725,40 @@
       margin: 1.5rem 0;
     }
     .callout p { margin: 0; color: var(--text); }
+
+    .cite-ref {
+      font-size: 0.7em;
+      vertical-align: super;
+      color: var(--accent);
+      text-decoration: none;
+      margin-left: 1px;
+    }
+    .cite-ref:hover { text-decoration: underline; }
+
+    .chapter-refs {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .chapter-refs h2 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .chapter-refs ol {
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .chapter-refs li {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
 
     /* Responsive: stack on narrow screens */
     @media (max-width: 600px) {

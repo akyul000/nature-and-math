@@ -87,8 +87,8 @@
     <p>
       In 1623, Galileo Galilei wrote that the book of nature
       <em>"is written in the language of mathematics, and its characters are triangles, circles,
-      and other geometric figures."</em> Three hundred years later, the physicist Eugene Wigner
-      called it <em>"the unreasonable effectiveness of mathematics in the natural sciences"</em> —
+      and other geometric figures."</em><a href="#ref-1" class="cite-ref">[1]</a> Three hundred years later, the physicist Eugene Wigner
+      called it <em>"the unreasonable effectiveness of mathematics in the natural sciences"</em><a href="#ref-2" class="cite-ref">[2]</a> —
       the baffling fact that abstract structures invented by human minds, often with no practical
       purpose in sight, turn out to describe physical reality with startling precision.
     </p>
@@ -117,7 +117,7 @@
         the ones that didn't. Of course the survivors look like they fit. This is exactly like 
         the classic wartime anomaly of the returning bombers. Analysts looked at the planes 
         covered in bullet holes and assumed those were the vulnerable areas needing reinforcement. 
-        In reality, the planes shot in the truly critical areas had already crashed.
+        In reality, the planes shot in the truly critical areas had already crashed.<a href="#ref-3" class="cite-ref">[3]</a>
       </li>
       <li>
         <strong>The evolutionary view:</strong> brains that found patterns — regularities in
@@ -134,14 +134,14 @@
       But the question has deeper roots. Aristotle believed that everything in nature
       had a <em>telos</em> — an ultimate purpose or goal it was striving toward.
       The acorn strives to become an oak. The stone falls because its telos is the earth.
-      For two thousand years, this framework felt complete.
+      For two thousand years, this framework felt complete.<a href="#ref-6" class="cite-ref">[6]</a>
     </p>
 
     <p>
       Modern science dismantled it. Nature, as far as we can tell, is blind. Electrons
       don't strive. Planets don't intend. The laws of physics have no author and no
       audience. Jean-Paul Sartre pushed this further: meaning is not discovered — it
-      is created. Existence precedes essence. There is no cosmic instruction manual.
+      is created. Existence precedes essence.<a href="#ref-7" class="cite-ref">[7]</a> There is no cosmic instruction manual.
       We write the equations; nature merely doesn't object.
     </p>
 
@@ -167,7 +167,7 @@
     <h2>What is a model?</h2>
 
     <p>
-      The statistician George Box put it plainly: <em>"All models are wrong, some are useful."</em>
+      The statistician George Box put it plainly: <em>"All models are wrong, some are useful."</em><a href="#ref-4" class="cite-ref">[4]</a>
       A model is not reality. It is a deliberate simplification of reality,  a map, not the territory.
       A map of a city omits the texture of the roads, the smell of the bakery on the corner,
       the exact height of every building. It is wrong in all those ways. But it still gets you
@@ -189,7 +189,7 @@
     <ul>
       <li>
         <strong>A point mass</strong>: Enough to compute its orbit around the Earth to
-        engineering precision. Newton did this in 1687.
+        engineering precision. Newton did this in 1687.<a href="#ref-5" class="cite-ref">[5]</a>
       </li>
       <li>
         <strong>A rigid sphere</strong>: Needed to explain the tides, which depend on the
@@ -208,7 +208,7 @@
     </p>
 
     <p>
-      Alfred Korzybski, writing in 1931, sharpened this: <em>"The map is not the territory."</em>
+      Alfred Korzybski, writing in 1931, sharpened this: <em>"The map is not the territory."</em><a href="#ref-8" class="cite-ref">[8]</a>
       A map of a country is not the country. It highlights roads and ignores the smell of rain
       on the pavement. The abstraction is incomplete. This abstraction isn't a defect; it’s a feature 
       that gets us from point A to point B. There are infinite paths to a destination, and all are "correct" 
@@ -374,7 +374,7 @@
       Where does this leave the PDEs? They are the macroscopic footprint of microscopic
       randomness. The diffusion equation, the wave equation, the Navier–Stokes equations
       all can be derived from statistical mechanics by averaging over vast numbers of random
-      events. They are not instructions that nature follows. They are observations we have
+      events.<a href="#ref-9" class="cite-ref">[9]</a> They are not instructions that nature follows. They are observations we have
       lifted out of the noise, given symbols, and found to be extraordinarily useful.
       Korzybski's maps, built from Box's principled ignorance, extracted from chaos.
     </p>
@@ -447,8 +447,7 @@
     </p>
 
     <p>
-      The answer is a <strong>surrogate model</strong> (also called an emulator or
-      metamodel): a cheap approximation that is trained to mimic the expensive model over
+      The answer is a <strong>surrogate model</strong>: a cheap approximation that is trained to mimic the expensive model over
       the parameter range of interest.
     </p>
 
@@ -474,18 +473,34 @@
 
     <p>
       The most interesting current research lives in the middle: <strong>physics-informed neural
-      networks</strong> (PINNs), which incorporate known governing equations as constraints during
-      training. The network learns to satisfy the PDE and the data simultaneously — combining
+      networks</strong> (PINNs)<a href="#ref-10" class="cite-ref">[10]</a>, which incorporate known governing equations as constraints during
+      training. The network learns to satisfy the PDE and the data simultaneously, combining
       the expressiveness of deep learning with the structure of physics.
     </p>
 
     <p>
-      We will return to all of this. The chapters that follow build the mathematical machinery
-      — the PDEs, their classification, their solutions — that makes all of the above possible.
+      We will return to all of this. The chapters that follow build the mathematical machinery.
+      The PDEs, their classification, their solutions, that makes all of the above possible.
       The goal is not to memorise equations. It is to develop a mental model of <em>why</em>
       different types of equations describe different types of phenomena, and what that tells
       you about the physical system before you even start computing.
     </p>
+
+    <section class="chapter-refs">
+      <h2>References</h2>
+      <ol>
+        <li id="ref-1">Galilei, G. (1623). <em>Il Saggiatore</em>. Accademia dei Lincei.</li>
+        <li id="ref-2">Wigner, E. P. (1960). The unreasonable effectiveness of mathematics in the natural sciences. <em>Communications on Pure and Applied Mathematics</em>, 13(1), 1–14.</li>
+        <li id="ref-3">Wald, A. (1943). <em>A Method of Estimating Plane Vulnerability Based on Damage of Survivors</em>. Statistical Research Group, Columbia University. (Declassified and reprinted by CRC Press, 1980.)</li>
+        <li id="ref-4">Box, G. E. P. (1979). Robustness in the strategy of scientific model building. In R. Launer &amp; G. Wilkinson (Eds.), <em>Robustness in Statistics</em>. Academic Press.</li>
+        <li id="ref-5">Newton, I. (1687). <em>Philosophiæ Naturalis Principia Mathematica</em>. Royal Society.</li>
+        <li id="ref-6">Aristotle. <em>Physics</em>, Book II (~350 BCE).</li>
+        <li id="ref-7">Sartre, J.-P. (1946). <em>L'existentialisme est un humanisme</em>. Nagel. (English translation: <em>Existentialism is a Humanism</em>, Yale University Press, 2007.)</li>
+        <li id="ref-8">Korzybski, A. (1933). <em>Science and Sanity: An Introduction to Non-Aristotelian Systems and General Semantics</em>. International Non-Aristotelian Library Publishing Company.</li>
+        <li id="ref-9">Einstein, A. (1905). Über die von der molekularkinetischen Theorie der Wärme geforderte Bewegung von in ruhenden Flüssigkeiten suspendierten Teilchen. <em>Annalen der Physik</em>, 322(8), 549–560.</li>
+        <li id="ref-10">Raissi, M., Perdikaris, P., &amp; Karniadakis, G. E. (2019). Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations. <em>Journal of Computational Physics</em>, 378, 686–707.</li>
+      </ol>
+    </section>
 
     <nav class="chapter-nav-footer" aria-label="chapter navigation">
       <!-- injected by nav.js -->
@@ -655,6 +670,40 @@
     .spectrum-label span { font-weight: 400; color: var(--text-muted); font-size: 0.775rem; }
     .spectrum-label.right { text-align: right; }
     .spectrum-arrow { font-size: 1.5rem; color: var(--accent); flex: 2; text-align: center; letter-spacing: 0.15em; }
+
+    .cite-ref {
+      font-size: 0.7em;
+      vertical-align: super;
+      color: var(--accent);
+      text-decoration: none;
+      margin-left: 1px;
+    }
+    .cite-ref:hover { text-decoration: underline; }
+
+    .chapter-refs {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .chapter-refs h2 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .chapter-refs ol {
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .chapter-refs li {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
   </style>
 
 </body>
